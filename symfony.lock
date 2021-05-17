@@ -1,0 +1,215 @@
+{
+    "bacon/bacon-qr-code": {
+        "version": "2.0.3"
+    },
+    "captcha-com/captcha": {
+        "version": "4.x-dev"
+    },
+    "captcha-com/symfony-captcha-bundle": {
+        "version": "4.x-dev"
+    },
+    "cboden/ratchet": {
+        "version": "v0.4.3"
+    },
+    "craue/formflow-bundle": {
+        "version": "3.4.x-dev"
+    },
+    "dasprid/enum": {
+        "version": "1.0.3"
+    },
+    "endroid/qr-code": {
+        "version": "4.x-dev"
+    },
+    "endroid/qr-code-bundle": {
+        "version": "4.x-dev"
+    },
+    "evenement/evenement": {
+        "version": "v3.0.1"
+    },
+    "friendsofsymfony/ckeditor-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
+        },
+        "files": [
+            "./config/packages/fos_ckeditor.yaml"
+        ]
+    },
+    "gos/pubsub-router-bundle": {
+        "version": "2.x-dev"
+    },
+    "gos/web-socket-bundle": {
+        "version": "3.x-dev"
+    },
+    "gos/websocket-client": {
+        "version": "1.x-dev"
+    },
+<<<<<<< HEAD
+    "gregwar/captcha": {
+        "version": "v1.1.9"
+    },
+    "gregwar/captcha-bundle": {
+        "version": "v2.1.5"
+    },
+=======
+>>>>>>> origin/main
+    "guzzlehttp/psr7": {
+        "version": "1.x-dev"
+    },
+    "illuminate/console": {
+        "version": "6.x-dev"
+    },
+    "illuminate/contracts": {
+        "version": "6.x-dev"
+    },
+    "illuminate/support": {
+        "version": "6.x-dev"
+    },
+<<<<<<< HEAD
+    "jbafford/password-strength-bundle": {
+        "version": "dev-master"
+    },
+=======
+>>>>>>> origin/main
+    "laravel/dusk": {
+        "version": "v5.11.0"
+    },
+    "lcobucci/clock": {
+        "version": "2.1.x-dev"
+    },
+    "lcobucci/jwt": {
+        "version": "4.0.x-dev"
+    },
+    "nesbot/carbon": {
+        "version": "2.x-dev"
+    },
+    "nyholm/nsa": {
+        "version": "1.2.1"
+    },
+    "php-translation/common": {
+        "version": "3.x-dev"
+    },
+    "php-translation/extractor": {
+        "version": "2.0-dev"
+    },
+    "php-translation/symfony-bundle": {
+        "version": "0.10",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.10",
+            "ref": "5c712c2758c3cccb964713f0061493b8ce2dd430"
+        },
+        "files": [
+            "./config/packages/dev/php_translation.yaml",
+            "./config/packages/php_translation.yaml",
+            "./config/routes/dev/php_translation.yaml",
+            "./config/routes/php_translation.yaml"
+        ]
+    },
+    "php-translation/symfony-storage": {
+        "version": "2.4-dev"
+    },
+    "php-webdriver/webdriver": {
+        "version": "1.10.0"
+    },
+    "phpoption/phpoption": {
+        "version": "1.7-dev"
+    },
+    "psr/http-message": {
+        "version": "1.0.x-dev"
+    },
+    "psr/simple-cache": {
+        "version": "1.0.x-dev"
+    },
+    "pugx/autocompleter-bundle": {
+        "version": "1.x-dev"
+    },
+    "ralouphie/getallheaders": {
+        "version": "3.0.3"
+    },
+    "ratchet/rfc6455": {
+        "version": "v0.3"
+    },
+    "react/cache": {
+        "version": "v1.1.1"
+    },
+    "react/dns": {
+        "version": "v1.5.0"
+    },
+    "react/event-loop": {
+        "version": "v1.1.1"
+    },
+    "react/promise": {
+        "version": "2.x-dev"
+    },
+    "react/promise-timer": {
+        "version": "v1.6.0"
+    },
+    "react/socket": {
+        "version": "v1.6.0"
+    },
+    "react/stream": {
+        "version": "v1.1.1"
+    },
+<<<<<<< HEAD
+=======
+    "symfony/google-mailer": {
+        "version": "4.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.4",
+            "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
+        }
+    },
+>>>>>>> origin/main
+    "symfony/mercure": {
+        "version": "0.5.x-dev"
+    },
+    "symfony/mercure-bundle": {
+        "version": "0.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "0.3",
+            "ref": "d1cdff3ae53bf6a5cbfb088c82f26032bdc14cc3"
+        },
+        "files": [
+            "./config/packages/mercure.yaml"
+        ]
+    },
+    "tattali/calendar-bundle": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.1",
+            "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
+        },
+        "files": [
+            "./config/routes/calendar.yaml"
+        ]
+    },
+    "toiba/fullcalendar-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "6.2",
+            "ref": "43c9033fa6f75f9325f9ac21787c8e8acb086934"
+        },
+        "files": [
+            "./config/routes/fullcalendar.yaml"
+        ]
+    },
+    "twilio/sdk": {
+        "version": "6.22.0"
+    },
+    "vlucas/phpdotenv": {
+        "version": "4.2.x-dev"
+    }
+}

@@ -1,0 +1,43 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>Produit</h1>
+    <img src="{{ asset('images/produits/'~produit.image~'') }}">
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idprod</th>
+                <td>{{ produit.idprod }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+
+                <td> <img src="{{ asset('images/produits/'~produit.image~'') }}" width="40px" height="40px">      </td>
+            </tr>
+            <tr>
+                <th>Libelle</th>
+                <td>{{ produit.libelle }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ produit.prix }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ produit.description }}</td>
+            </tr>
+            <tr>
+                <th> Categorie</th>
+                <td>{{ produit.idCat.nomcategorie }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <a href="{{ path('produit_edit', {'idprod': produit.idprod}) }}"><button type="button" class="btn btn-outline-warning">modifier</button></a>
+
+    {{ include('produit/_delete_form.html.twig') }}
+{% endblock %}

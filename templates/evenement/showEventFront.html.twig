@@ -1,0 +1,528 @@
+{% extends 'base_clientSide.html.twig' %}
+
+
+{% block stylesheets %}
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+
+
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="{{asset('assets/vendor/magnific-popup/dist/magnific-popup.css')}}"/>
+
+    <!-- Revolution Slider -->
+    <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/settings.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/layers.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/navigation.css')}}">
+
+    <!-- Bootstrap Sweetalert -->
+    <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.css')}}"/>
+
+    <!-- Social Likes -->
+    <link rel="stylesheet" href="{{asset('assets/vendor/social-likes/dist/social-likes_flat.css')}}" />
+
+    <!-- FontAwesome -->
+    <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fontawesome-all.min.js')}}"></script>
+    <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fa-v4-shims.min.js')}}"></script>
+
+    <!-- Youplay -->
+    <link rel="stylesheet" href="{{asset('assets/css/youplay.css')}}">
+
+    <!-- RTL (uncomment this to enable RTL support) -->
+    <!-- <link rel="stylesheet" href="assets/css/youplay-rtl.min.css" /> -->
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+
+    <!-- END: Styles -->
+
+    <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet"></script>
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+    <style>
+        #map {
+            width: 698px;
+            height: 468px;
+            margin-bottom: 15px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <!--Modal Map-->
+    <div class="modal fade bd-example-modal-lg" id="MapsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Localisation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <div id="map"></div>
+                    </center>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Modal Map-->
+
+    <!--Modal matches-->
+    <div class="modal fade bd-example-modal-lg" id="matches" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Maches</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        {{ include('evenement/modalMaches.html.twig') }}
+                    </center>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Modal matches-->
+
+    <!--Modal no matches-->
+    <div class="modal fade bd-example-modal-lg" id="noMatches" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Maches</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <center>
+                        <h3> Adversaires pas encore attribués</h3>
+                        {{ include('evenement/modalNoMaches.html.twig') }}
+                    </center>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/Modal no matches-->
+
+<!-- Preloader -->
+<div class="page-preloader preloader-wrapp">
+
+    <img src="{{asset('/images/logo.png')}}" alt="">
+
+    <div class="preloader"></div>
+</div>
+<!-- /Preloader -->
+<div class="content-wrap">
+
+    <section class="youplay-banner banner-top youplay-banner-parallax small">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('images/banner-bg.jpg')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1 class="h1">Evenements</h1>
+                    <ul class="pager">
+                        <li class="previous"><a href="{{ path('listerE')}}"><span aria-hidden="true">&larr;</span> Retour</a></li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- /Banner -->
+
+    <div class="container youplay-news">
+
+        <!--Core view-->
+        <div class="container youplay-news youplay-post">
+
+            <div class="col-md-9">
+                <!-- Post Info -->
+                <article class="news-one">
+
+
+                    <!-- Post Text -->
+                    <div class="description">
+                        <a href="https://www.youtube.com/watch?v={{  urlId  }}" class="angled-img pull-left video-popup">
+                            <div class="img">
+                                <img src="{{ asset('/images/evenement/' ~ evenement.image)  }}" alt="">
+                            </div>
+                            <i class="fa fa-play icon"></i>
+                        </a>
+
+                        <p>
+                            {{ evenement.nomevent }}
+                        </p>
+
+                    </div>
+                    <!-- /Post Text -->
+
+                    <!-- Review Rating -->
+                    <div class="youplay-review-rating">
+                        <div class="row">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="col-md-4">
+                                            {% if evenement.nbremaxParticipant == nbP %}
+                                                <div class="youplay-hexagon-rating" data-toggle="modal" data-target="#matches"  data-max="{{ evenement.nbremaxParticipant }}" title="{{ nbP }} out of {{ evenement.nbremaxParticipant }}"><span>{{ nbP }}</span></div>
+                                            {% else %}
+                                                <div class="youplay-hexagon-rating" data-toggle="modal" data-target="#noMatches"  data-max="{{ evenement.nbremaxParticipant }}" title="{{ nbP }} out of {{ evenement.nbremaxParticipant }}"><span>{{ nbP }}</span></div>
+                                            {% endif %}
+
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        {{ evenement.description }}
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                    <!-- /Review Rating -->
+
+                    <!--Like-->
+                    <a href="{{ path('evenement_like',{'id':evenement.idevent}) }}" class="btn btn-link js-like" style="width: 180px" >
+                        <!--TODO: app.user-->
+                        <!--if app.user and isLikedByUser -->
+                        {% if app.user and isLikedByUser %}
+                        <i class="fas fa-thumbs-up" id="ilike"></i>
+                        {% else %}
+                        <i class="far fa-thumbs-up" id="ilike"></i>
+                        {% endif %}
+
+                        <span class="js-label">J'aime</span>
+                    </a>
+                    <!--/Like-->
+
+                    <!--dislike-->
+                    <a href="{{ path('evenement_disLike',{'id':evenement.idevent}) }}" class="btn btn-link js-dislike" style="width: 180px">
+                        <!--TODO: app.user-->
+                        <!--if app.user and isLikedByUser -->
+                        {% if app.user and isDislikedByUser %}
+                            <i class="fas fa-thumbs-down" id="idislike"></i>
+                        {% else %}
+                            <i class="far fa-thumbs-down" id="idislike"></i>
+                        {% endif %}
+
+                        <span class="js-label">Je n'aime pas</span>
+                    </a>
+                    <!--dislike-->
+
+                    <div class="youplay-review-rating">
+                        <div class="row">
+                            <table width="100%">
+                                <tr>
+                                    <td style="text-align:center">
+                                        <!-- Post Interactions -->
+                                        <div class="tags">
+                                            <i class="fa fa-tags"></i> <a >Interactions</a>
+                                        </div>
+                                        <!-- /Post Interactions -->
+
+                                        <!-- Post Interactions -->
+                                        <div class="meta">
+                                            <div class="item">
+                                                <a ><i class="fa fa-heart"></i><span class="js-likes">{{ NBLikes }}</span> </a>
+                                            </div>
+                                            <div class="item">
+                                                <a ><i class="fa fa-heart-broken"></i><span class="js-dislikes">{{ NBDislikes }}</a>
+                                            </div>
+                                        </div>
+                                        <!-- /Post Interactions -->
+                                    </td>
+                                    <td style="text-align:center">
+                                        <!-- Post date -->
+                                        <div class="tags">
+                                            <i class="fa fa-tags"></i> <a >Date</a>
+                                        </div>
+                                        <!-- /Post Date -->
+
+                                        <!-- Post Date -->
+                                        <div class="meta">
+                                            <div class="item">
+                                                <a href="#"><i class="fa fa-calendar meta-icon"></i> {{ evenement.datedeb ? evenement.datedeb|date('Y-m-d') : '' }}</a>
+                                            </div>
+                                            <br>
+                                            <div class="item">
+                                                <a href="#"><i class="fa fa-calendar meta-icon"></i> {{ evenement.datefin ? evenement.datedeb|date('Y-m-d') : '' }}</a>
+                                            </div>
+                                        </div>
+                                        <!-- /Post Date -->
+                                    </td>
+                                    <td style="text-align:center">
+                                        <!-- Post Categorie -->
+                                        <div class="tags">
+                                            <i class="fa fa-tags"></i> <a >Categorie</a>
+                                        </div>
+                                        <!-- /Post Categorie -->
+
+                                        <!-- Post Categorie -->
+                                        <div class="meta">
+                                            <div class="item">
+                                                <a href="#"><i class="fa fa-plus-circle"></i> {{ evenement.categorie.nomcategorie }}</a>
+                                            </div>
+                                        </div>
+                                        <!-- /Post Categorie -->
+                                    </td>
+
+                                    <td style="text-align:center">
+                                        <!-- Post lieu -->
+                                        <div class="tags">
+                                            <i class="fa fa-tags"></i> <a >lieu</a>
+                                        </div>
+                                        <!-- /Post lieu -->
+
+                                        <!-- Post lieu -->
+                                        <div class="meta">
+                                            <div class="item">
+                                                {% if evenement.lieu != "ONLINE" %}
+                                                    <button data-toggle="modal" data-target="#MapsModal" type="button" style="position: relative;left: -22px;top: 7px;background: none;border: none;color: white;">
+                                                        <i class="fa fa-map-marker-alt"></i> Voir la localisation
+                                                        <input id="js-lieu" type="hidden" value="{{ evenement.lieu }}">
+                                                    </button>
+                                                {% else %}
+                                                    <i class="fa fa-map-marker-alt"></i> ONLINE
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <!-- /Post lieu -->
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+
+                        </div>
+                    </div>
+
+                </article>
+                <!-- /Post Info -->
+
+                <!-- Post Comments -->
+                <div class="comments-block">
+                    <h2>Commentaires <small>{{ Commentaires  | length }}</small></h2>
+
+                    <!-- Comments List -->
+                    <ul class="comments-list">
+                        <!-- Kristen Bradley comment -->
+                        {% for c in Commentaires %}
+                        <li>
+                            <article>
+                                <div class="comment-avatar pull-left">
+                                    <img src="{{ asset('/images/membre/' ~ c.membre.image)  }}" alt="">
+                                </div>
+                                <div class="comment-cont clearfix">
+                                    <a class="comment-author h4" href="#">{{ c.membre.prenom  }} {{ c.membre.nom }}</a>
+                                    <div class="comment-text">
+                                        {{ c.commentaire }}
+                                    </div>
+                                </div>
+                            </article>
+
+
+                        </li>
+                        {% else %}
+                            <tr>
+                                <td colspan="10">Pas de commentaires</td>
+                            </tr>
+
+                        {% endfor %}
+                        <!-- /Kristen Bradley comment -->
+                    </ul>
+                    <!-- /Comments List -->
+
+                    <h2>Ajouter un commentaire</h2>
+                    <!-- Comment Form -->
+                    {{ include('reactionev/_form.html.twig') }}
+                    <!-- /Comment Form -->
+                </div>
+                <!-- /Post Comments -->
+            </div>
+
+
+            <!-- Right Side -->
+            <div class="col-md-3">
+                {% set currentPath = path(app.request.attributes.get('_route'),
+                    app.request.attributes.get('_route_params')) %}
+                <img  src="{{ qr_code_path('http:127.0.0.1:8000'~currentPath | replace({'/': '\\'}))}}" />
+            </div>
+
+        </div>
+
+        <!--/Core view-->
+
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+//window.FontAwesomeConfig = { autoReplaceSvg: false }
+        setTimeout(() => {
+        /**Like*/
+        function onClickBtnLike(event){
+            event.preventDefault();
+
+            const url=this.href;
+
+            const spanCount=document.querySelector('span.js-likes');
+            const spanCountDis=document.querySelector('span.js-dislikes');
+            //const spanCount=this.querySelector('span.js-likes');
+            const a=document.querySelector('a.js-like');
+            window.FontAwesomeConfig = { autoReplaceSvg: false }
+            const iconeLike=a.querySelector('#ilike');
+            const iconeDis=document.querySelector('#idislike');
+            str = JSON.stringify(iconeLike.dataset);
+
+            axios.get(url).then(function (response) {
+                spanCount.textContent=response.data.likes;
+                spanCountDis.textContent=response.data.dislikes;
+
+                if(iconeLike.dataset['prefix']=='fas'){
+                    iconeLike.dataset['prefix']='far';
+                }
+                else{
+                    iconeLike.dataset['prefix']='fas';
+                    if(iconeDis.dataset['prefix']=='fas') {
+                        iconeDis.dataset['prefix']='far';
+                    }
+                }
+            }).catch(function (error) {
+                if(error.response.status===403){
+                    window.alert("Vous ne pouvez pas disliker un evenement si vous n'êtes pas connecté!")
+                }else {
+                    window.alert("Une erreur s'est produite, réessayer plus tard.")
+                }
+            });
+        }
+        document.querySelector('a.js-like').addEventListener('click', onClickBtnLike);
+
+/****************************************************************/
+        /**DisLike*/
+        function onClickBtnDisLike(event){
+            event.preventDefault();
+
+            const url=this.href;
+
+            const spanCount=document.querySelector('span.js-likes');
+            const spanCountDis=document.querySelector('span.js-dislikes');
+            const a=document.querySelector('a.js-dislike');
+            window.FontAwesomeConfig = { autoReplaceSvg: false }
+            const iconeDis=a.querySelector('#idislike');
+            const iconeLike=document.querySelector('#ilike');
+            str = JSON.stringify(iconeDis.dataset);
+
+            axios.get(url).then(function (response) {
+                spanCount.textContent=response.data.likes;
+                spanCountDis.textContent=response.data.dislikes;
+                if(iconeDis.dataset['prefix']=='fas'){
+                    iconeDis.dataset['prefix']='far';
+                }
+                else{
+                    iconeDis.dataset['prefix']='fas';
+                    if(iconeLike.dataset['prefix']=='fas'){
+                        iconeLike.dataset['prefix']='far';
+                    }
+
+                }
+            }).catch(function (error) {
+                if(error.response.status===403){
+                    window.alert("Vous ne pouvez pas disliker un evenement si vous n'êtes pas connecté!")
+                }else {
+                    window.alert("Une erreur s'est produite, réessayer plus tard.")
+                }
+            });
+        }
+        document.querySelector('a.js-dislike').addEventListener('click', onClickBtnDisLike);
+
+/************************************************************************************************/
+        /****Commentaire**/
+
+
+
+        }, 2000);
+
+
+
+        
+    </script>
+
+    <script>
+
+        $( document ).ready(function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(initMap);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        });
+
+
+        //document.getElementById("publication_localisation").value = data.results[i].properties.PlaceName;
+
+        function initMap(position) {
+
+            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 12);
+            var tiles = L.esri.basemapLayer("Streets").addTo(map);
+            var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+            var results = L.layerGroup().addTo(map);
+            results.addLayer(L.marker([position.coords.latitude, position.coords.longitude]));
+            searchControl.on("results", function(data) {
+                results.clearLayers();
+                for (var i = data.results.length - 1; i >= 0; i--) {
+                    results.addLayer(L.marker(data.results[i].latlng));
+                }
+            });
+
+
+            var coord=(document.getElementById("js-lieu").value).split(',');
+            var lat = coord[0];
+            var lng = coord[1];
+            console.log("Ye: " + lat + " and longitude: " + lng);
+            var marker = L.marker([lat, lng]).addTo(map);
+            var popup = L.popup()
+                .setLatLng([lat, lng])
+                .setContent("L'évenement aura lieu içi "+coord)
+                .openOn(map);
+
+
+
+        }
+    </script>
+{% endblock %}

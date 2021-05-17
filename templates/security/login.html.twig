@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>GamingRoom</title>
+
+        <meta name="description" content="GamingRoom - est une platforme où les joueurs peuvent se rencontrer et s'amuser">
+        <meta name="keywords" content="gaming, game, community, games,events,cours">
+        <meta name="author" content="ProdgiesDev">
+
+        <link rel="icon" type="image/png" href="assets/images/dark/icon.png">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- START: Styles -->
+
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css')}}" />
+
+        <!-- Flickity -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/flickity/dist/flickity.min.css')}}" />
+
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/magnific-popup/dist/magnific-popup.css')}}" />
+
+        <!-- Revolution Slider -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/settings.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/layers.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/navigation.css')}}">
+
+        <!-- Bootstrap Sweetalert -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.css')}}" />
+
+        <!-- Social Likes -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/social-likes/dist/social-likes_flat.css')}}" />
+
+        <!-- FontAwesome -->
+        <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fontawesome-all.min.js')}}"></script>
+        <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fa-v4-shims.min.js')}}"></script>
+
+        <!-- Youplay -->
+        <link rel="stylesheet" href="{{asset('assets/css/youplay.css')}}">
+
+        <!-- RTL (uncomment this to enable RTL support) -->
+        <!-- <link rel="stylesheet" href="{{asset('assets/css/youplay-rtl.min.css')}}" /> -->
+
+        <!-- Custom Styles -->
+        <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+        
+        <!-- END: Styles -->
+
+        <!-- jQuery -->
+        <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+
+        {% block stylesheets %}
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        {% endblock %}
+    </head>
+    <body>
+      <!-- Preloader -->
+<div class="page-preloader preloader-wrapp">
+    
+        <img src="/images/logo.png" alt="">
+    
+    <div class="preloader"></div>
+</div>
+<!-- /Preloader -->
+
+    
+
+    
+
+
+
+
+
+<!-- Navbar -->
+<nav class="navbar-youplay navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="off-canvas" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+                <a class="navbar-brand" href="{{ path('home') }}">
+                    <img src="/images/logo.png" alt="">
+                </a>
+            
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            
+                <ul class="nav navbar-nav">
+                     <li class=" dropdown dropdown-hover">
+            <a href="{{path('userJeux')}}" >
+                Jeux
+                
+            </a></li>
+                      <li class=" dropdown dropdown-hover">
+            <a href="{{path('listerE')}}" >
+                Evenements
+                
+            </a></li>
+                      <li class=" dropdown dropdown-hover">
+            <a href="{{path('cour_index')}}" >
+                Cours
+                
+            </a></li>
+             <li class=" dropdown dropdown-hover">
+            <a href="{{path('adminaddReclamtion')}}" >
+                Reclamation
+                
+            </a></li>
+        <li class=" dropdown dropdown-hover">
+            <a href="{{path('front')}}" >
+                Store
+                
+                <span class="label">games</span>
+            </a>
+        </li>
+        </li>
+                </ul>
+            
+
+            
+            <ul class="nav navbar-nav navbar-right">
+                
+
+                    <li>
+                        <a class="search-toggle" href="search.html">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </li>
+                
+
+                
+                    <li class="dropdown dropdown-hover dropdown-cart">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <i class="fa fa-shopping-cart"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="row youplay-side-news">
+                                <div class="col-xs-3 col-md-4">
+                                    <a href="#" class="angled-img">
+                                        <div class="img">
+                                            
+                                                <img src="assets/images/dark/game-bloodborne-500x375.jpg" alt="">
+                                                
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-md-8">
+                                    <a href="#" class="pull-right mr-10"><i class="fa fa-times"></i></a>
+                                    
+                                        <h4 class="ellipsis"><a href="#">Bloodborne</a></h4>
+                                        
+                                    <span class="quantity">1 × <span class="amount">$50.00</span></span>
+                                </div>
+                            </div>
+
+                            <div class="row youplay-side-news">
+                                <div class="col-xs-3 col-md-4">
+                                    <a href="#" class="angled-img">
+                                        <div class="img">
+                                            
+                                                <img src="assets/images/dark/game-kingdoms-of-amalur-reckoning-500x375.jpg" alt="">
+                                            
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-xs-9 col-md-8">
+                                    <a href="#" class="pull-right mr-10"><i class="fa fa-times"></i></a>
+                                    
+                                        <h4 class="ellipsis"><a href="#">Kingdoms of Amalur</a></h4>
+                                        
+                                    <span class="quantity">1 × <span class="amount">$20.00</span></span>
+                                </div>
+                            </div>
+
+                            <div class="ml-20 mr-20 pull-right"><strong>Subtotal:</strong> <span class="amount">$70.00</span></div>
+
+                            <div class="btn-group pull-right m-15">
+                                <a href="#" class="btn btn-default btn-sm">View Cart</a>
+                                <a href="#" class="btn btn-default btn-sm">Checkout</a>
+                            </div>
+                        </div>
+                    </li>
+                
+
+                
+                    <li class="dropdown dropdown-hover dropdown-user">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                            <i class="fa fa-user"></i>
+                            <span class="caret"></span>
+                        </a>
+                       <!-- <div class="dropdown-menu">
+                            <form class="navbar-login-form" action="#" method="post">
+                                <p>Username:</p>
+                                <div class="youplay-input">
+                                    <input type="text" name="log">
+                                </div>
+
+                                <p>Password:</p>
+                                <div class="youplay-input">
+                                    <input type="password" name="pwd">
+                                </div>
+
+                                <div class="youplay-checkbox mb-15 ml-5">
+                                    <input type="checkbox" name="rememberme" value="forever" id="nav-rememberme">
+                                    <label for="nav-rememberme">Remember Me</label>
+                                </div>
+
+                                <button class="btn btn-sm ml-0 mr-0" name="submit">Log In</button>
+                                <br>
+
+                                <p>
+                                    <a class="no-fade" href="#">Lost password?</a> | <a href="#" class="no-fade" data-toggle="modal" data-target="#nav-registration">Register</a>
+                                </p>
+                            </form>
+                        </div>
+                    </li>-->
+                
+            </ul>
+            
+        </div>
+    </div>
+</nav>
+<!-- /Navbar -->
+
+
+
+
+
+
+    
+
+
+<section class="youplay-banner banner-top youplay-banner-parallax full" style="overflow: hidden;">
+    
+        <div class="image" data-speed="0.4">
+            <img src="assets/images/dark/login2.png" alt="" class="jarallax-img">
+        </div>
+    
+
+    <div class="info">
+        <div>
+            <div class="container">
+                
+                
+                
+                    
+    <div class="youplay-login">
+        <div class="youplay-form text-center">
+            <h1>Login</h1>
+           <h4>WELCOME !</h4>
+           <!-- <div class="btn-group social-list dib">
+                <a class="btn btn-default" title="Share on Facebook" href="#"><i class="fab fa-facebook"></i></a>
+                <a class="btn btn-default" href="#" title="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-default" href="#" title="Share on Google Plus"><i class="fab fa-google-plus"></i></a>
+            </div>-->
+
+            <form method="post">
+            
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                {% if app.user %}
+                    <div class="mb-3">
+                        You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+                <div class="youplay-input">
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail"  placeholder="Email" required autofocus>
+                </div>
+                <div style="text-align: right;">
+                    <i class="far fa-eye-slash" id="hide" onclick="myFunction()"></i>
+                    <i class="fas fa-eye" id="show" onclick="myFunction()"></i>
+                </div>
+                <div class="youplay-input">
+                    <input type="password" name="password" id="inputPassword"  placeholder="Password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+
+                <button class="btn btn-default db">Login</button>
+                <p>
+                    <a href="#" class="no-fade" data-toggle="modal" data-target="#nav-registration">Lost password?</a> | <a href="{{ path('membre_new') }}" class="no-fade" data-toggle="modal" >Register</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /Banner -->
+      <!-- Registration Form -->
+      <div id="nav-registration" class="modal fade">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Reset Password</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="#" method="post">
+                          <div>
+                              <p>Email:</p>
+                              <div class="youplay-input">
+                                  <input type="email" id="userEmail" name="user_login" />
+                              </div>
+
+                              <p>
+                                  <em>A password will be e-mailed to you.</em>
+                              </p>
+
+                              <button class="btn ml-3" id="sendCodebtn" name="submit">Envoyer</button>
+
+                              <p>Code:</p>
+                              <div class="youplay-input">
+                                  <input type="text" id="emailcode" name="user_email" />
+                              </div>
+                              <button class="btn ml-3" id="submitcode" name="submit" >Valider</button>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- /Registration Form -->
+
+
+      <!-- Registration Form -->
+      <div id="nav-resetpassword" class="modal fade">
+          <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                      <h4 class="modal-title">Reset Password</h4>
+                  </div>
+                  <div class="modal-body">
+                      <form action="#" method="post">
+                          <div>
+                              <p>new password</p>
+                              <div class="youplay-input">
+                                  <input type="password" id="password" name="user_login" />
+                              </div>
+
+
+                              <p>Repeat password : </p>
+                              <div class="youplay-input">
+                                  <input type="password" id="confirmpassword" name="user_email" />
+                              </div>
+                              <button class="btn ml-3" id="submitPass" name="submit">Modifier</button>
+
+                          </div>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- /Registration Form -->
+ </body>
+    
+    
+    <!-- START: Scripts -->
+
+    <!-- Object Fit Polyfill -->
+    <script src="{{asset('assets/vendor/object-fit-images/dist/ofi.min.js')}}"></script>
+
+    <!-- jQuery -->
+    <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+
+    <!-- Hexagon Progress -->
+    <script src="{{asset('assets/vendor/HexagonProgress/jquery.hexagonprogress.min.js')}}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{{asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+
+    <!-- Jarallax -->
+    <script src="{{asset('assets/vendor/jarallax/dist/jarallax.min.js')}}"></script>
+
+    <!-- Flickity -->
+    <script src="{{asset('assets/vendor/flickity/dist/flickity.pkgd.min.js')}}"></script>
+
+    <!-- jQuery Countdown -->
+    <script src="{{asset('assets/vendor/jquery-countdown/dist/jquery.countdown.min.js')}}"></script>
+
+    <!-- Moment.js -->
+    <script src="{{asset('assets/vendor/moment/min/moment.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/moment-timezone/builds/moment-timezone-with-data.min.js')}}"></script>
+
+    <!-- Magnific Popup -->
+    <script src="{{asset('assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+
+    <!-- Revolution Slider -->
+    <script src="{{asset('assets/vendor/slider-revolution/js/jquery.themepunch.tools.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/slider-revolution/js/jquery.themepunch.revolution.min.js')}}"></script>
+
+    <!-- ImagesLoaded -->
+    <script src="{{asset('assets/vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+
+    <!-- Isotope -->
+    <script src="{{asset('assets/vendor/isotope-layout/dist/isotope.pkgd.min.js')}}"></script>
+
+    <!-- Bootstrap Validator -->
+    <script src="{{asset('assets/vendor/bootstrap-validator/dist/validator.min.js')}}"></script>
+
+    <!-- Bootstrap Sweetalert -->
+    <script src="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.min.js')}}"></script>
+
+    <!-- Social Likes -->
+    <script src="{{asset('assets/vendor/social-likes/dist/social-likes.min.js')}}"></script>
+
+    <!-- Youplay -->
+    <script src="{{asset('assets/js/youplay.min.js')}}"></script>
+    <script src="{{asset('assets/js/youplay-init.js')}}"></script>
+
+    <script>
+        $(function(){
+            var code=null;
+            var glemail=null;
+            $("#submitPass").click(function(e){
+
+                e.preventDefault();
+                const pass=$("#password").val();
+                const confirmpassword=$("#confirmpassword").val();
+                if(pass.trim()=='' || confirmpassword.trim()=='' || pass!=confirmpassword){
+                    alert("Please check your password");
+                    return;
+                }
+                if(pass.length<6){
+                    alert("Le mot de passe est trop court.Il doit avoir au minimum 6");
+                    return;
+                }
+                else if(!(/\d/.test(pass) && /[a-zA-Z]/.test(pass))){
+                    alert("Votre mot de passe doit contenir au minimum 1 caractère et au minimum 1 numéro.");
+                    return;
+                }
+                if(glemail==null){
+                    alert("Email not found");
+                    return;
+                }
+                $.get("/resetPass/"+glemail+"/"+pass, function(data, status){
+                    const statuscode=parseInt(JSON.parse(data));
+                    if(statuscode==404){
+                        alert("Email not Found")
+                        return;
+                    }
+                    else if(statuscode==200){
+                        $("#nav-resetpassword").modal('hide');
+                        alert("Pass success");
+                    }
+                    else{
+                        alert("Server Erreur");
+                    }
+                });
+
+            });
+            $("#submitcode").click(function(e){
+               e.preventDefault();
+               const emailcode=$("#emailcode").val();
+               if(emailcode.trim()=='')
+               {
+                   alert("Enter a code");
+                   return;
+               }
+               if(code!=parseInt(emailcode)){
+                   alert("Code invalid");
+               }
+               else{
+                   code=null;
+                   $("#nav-registration").modal('hide');
+                   $("#nav-resetpassword").modal();
+
+               }
+            });
+           $("#sendCodebtn").click(function(e){
+               e.preventDefault();
+               const email=$("#userEmail").val();
+               var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+               if(!regex.test(email)){
+                   alert("this email "+email+" not valide");
+                   return;
+               }
+               $.get("/sendResetCode/"+email, function(data, status){
+                   if(parseInt(JSON.parse(data))==404){
+                       alert("Email not Found")
+                       return;
+                   }
+                   code=JSON.parse(data);
+                   glemail=email;
+               });
+
+
+           })
+        });
+    </script>
+
+    <script>
+        function myFunction(){
+            var x = document.getElementById("inputPassword");
+            if(x.type === "password"){
+                x.type = "text";
+                document.getElementById('hide').style.display = "inline-block";
+                document.getElementById('show').style.display = "none";
+            }
+            else{
+                x.type = "password";
+                document.getElementById('hide').style.display = "none";
+                document.getElementById('show').style.display = "inline-block"
+            }
+        }
+    </script>
+
+    <!-- END: Scripts -->
+
+</html>

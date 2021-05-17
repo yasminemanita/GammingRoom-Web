@@ -1,0 +1,14 @@
+gos_web_socket:
+    server:
+        port: 1337
+        host: 127.0.0.1
+        router:
+            resources:
+                - '%kernel.project_dir%/config/pubsub/routing.yaml'
+    pushers:
+        wamp:
+            enabled: true # Flag to enable this pusher
+            host: 127.0.0.1 # This will probably be the same as your `gos_web_socket.server.host` value
+            port: 1337 # This will probably be the same as your `gos_web_socket.server.port` value
+            ssl: false # Flag to enable SSL connections to the websocket server, default false
+            origin: null # The origin domain for the pusher, default null (if origin checking is enabled

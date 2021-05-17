@@ -1,0 +1,61 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+{% endblock %}
+
+{% block body %}
+
+
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>ChartJS</title>
+
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+            </head>
+            <body>
+            <canvas id="produit" width="550" height="200"></canvas>
+            <canvas id="produits" width="600" height="200"></canvas>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+
+            <script>
+                let pr = document.querySelector("#produit")
+                let graph = new Chart (pr, {
+                        type: "pie",
+                        data: {
+                            labels: {{ libelle | raw }},
+                            datasets: [{
+                                label: ['produits en fonction de leurs prix '],
+                                data: {{ prix | raw }},
+                                backgroundColor: ['pink', 'blue', 'green', 'yellow','black','brown']
+
+                            }]
+                        }
+                    }
+                )
+
+
+                let pr1 = document.querySelector("#produits")
+                let graph1 = new Chart (pr1, {
+                    type: "bar",
+                    data: {
+                        labels: {{ libelle | raw }},
+                        datasets: [{
+                            label: ['Repartition par prix'],
+                            data: {{ prix | raw }},
+
+                       //backgroundColor: ['pink', 'blue', 'green', 'yellow','black','brown']
+                        }]
+
+                    }
+                })
+
+            </script>
+            </body>
+
+
+{% endblock %}

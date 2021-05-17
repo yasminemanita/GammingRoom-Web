@@ -1,0 +1,289 @@
+{% extends 'base_clientSide.html.twig' %}
+{% block title %}Evenement{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+
+     <!-- Magnific Popup -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/magnific-popup/dist/magnific-popup.css')}}"/>
+
+     <!-- Revolution Slider -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/settings.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/layers.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/navigation.css')}}">
+
+     <!-- Bootstrap Sweetalert -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.css')}}"/>
+
+     <!-- Social Likes -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/social-likes/dist/social-likes_flat.css')}}" />
+
+     <!-- FontAwesome -->
+     <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fontawesome-all.min.js')}}"></script>
+     <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fa-v4-shims.min.js')}}"></script>
+
+     <!-- Youplay -->
+     <link rel="stylesheet" href="{{asset('assets/css/youplay.css')}}">
+
+     <!-- RTL (uncomment this to enable RTL support) -->
+     <!-- <link rel="stylesheet" href="assets/css/youplay-rtl.min.css" /> -->
+
+     <!-- Custom Styles -->
+     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+
+     <!-- END: Styles -->
+
+ {% endblock %}
+
+{% block body %}
+
+    <!-- Preloader -->
+    <div class="page-preloader preloader-wrapp">
+
+        <img src="{{asset('/images/logo.png')}}" alt="">
+
+        <div class="preloader"></div>
+    </div>
+    <!-- /Preloader -->
+    <div class="content-wrap">
+
+    <!--
+Banner
+
+Additional classes:
+.small
+.xsmall
+.big
+.full
+-->
+    <section class="youplay-banner banner-top youplay-banner-parallax small">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('images/banner-bg.jpg')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1 class="h1">Evenements</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Banner -->
+
+    <div class="container youplay-news" >
+        {% for message in app.flashes('danger') %}
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> {{ message }}
+            </div>
+        {% endfor %}
+
+        <!-- News List -->
+        <div class="col-md-9" id="affichage_events">
+            {% set i=0 %}
+            <!-- Single News Block -->
+            {% for evenement in evenements %}
+
+            <div class="news-one">
+                <div class="row vertical-gutter">
+                    <div class="col-md-4">
+                        <a href="{{ path('show_EventFront',{'id': evenement.idevent}) }}" class="angled-img">
+                            <div class="img">
+                                <img src="{{ asset('/images/evenement/' ~ evenement.image) }}" >
+                            </div>
+                            <div class="youplay-hexagon-rating youplay-hexagon-rating-small" data-max="{{ evenement.nbremaxParticipant }}" title="{{ nbParticipants[i] }} out of {{ evenement.nbremaxParticipant }}"><span>{{ nbParticipants[i] }}</span></div>
+                        </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="clearfix">
+                            <h3 class="h2 pull-left m-0"><a href="{{ path('show_EventFront',{'id': evenement.idevent}) }}">
+                                    <td>{{ evenement.nomevent }}</td>
+                                </a></h3>
+                            <span class="date pull-right"><i class="fa fa-calendar"></i> <td>{{ evenement.datedeb ? evenement.datedeb|date('Y-m-d') : '' }}</td></span>
+                            <span class="date pull-right"><i class="fa fa-calendar"></i> <td>{{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}</td></span>
+                        </div>
+                        <div class="tags">
+                            <i class="fa fa-tags"></i> <a href="#">{{ evenement.categorie.nomcategorie }}</a>,{%if evenement.lieu == "ONLINE" %} <a href="#">{{ evenement.lieu }}</a>.{% endif %}
+                        </div>
+                        <div class="description">
+                            <td>{{ evenement.description }}</td>
+                        </div>
+                        <form action="{{ path('actionParticipant',{'id':evenement.idevent}) }}">
+                            <button  class="btn read-more pull-left" >
+                                {{ isParticpant[i]}}</button>
+
+                        </form>
+                        <form action="{{ path('show_EventFront',{'id': evenement.idevent}) }}">
+                            <button  class="btn read-more pull-left" >
+                                Consulter</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+                {% set i=i+1 %}
+            {% else %}
+                <tr>
+                    <td colspan="10">no records found</td>
+                </tr>
+
+            {% endfor %}
+            <!-- /Single News Block -->
+
+            <!-- Pagination -->
+            <ul class="pagination">
+                <!-- Pagination   knp_pagination_render(evenements, 'participants/pagination.html.twig') -->
+                {{ knp_pagination_render(evenements) }}
+
+            </ul>
+            <!-- /Pagination -->
+        </div>
+        <!-- /News List -->
+
+        <!-- Right Side -->
+        <div class="col-md-3">
+
+            <div class="side-block">
+                <p>Chercher un évenement:</p>
+                <form action={{ path('rechrecheEvent') }}>
+                    <div class="youplay-input">
+                        <input id="search" type="text" name="recherche" placeholder="enter search term" data-action="evenement/rechreche">
+                    </div>
+                </form>
+            </div>
+            <!-- /Side Search -->
+
+            <div class="side-block">
+                <h4 class="block-title">Date</h4>
+                <ul class="block-content">
+                    <li><a href="{{ path('upComingEvents')}}">A venir</a></li>
+
+                    <!-- Side Categories
+                     /Side Categories -->
+                </ul>
+            </div>
+
+            <div class="side-block">
+                <h4 class="block-title">Categories</h4>
+                <ul class="block-content">
+                    <li><a href="{{ path('listerE')}}">ALL</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'adventure'}) }}">Adventure</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'strategy'}) }}">Strategy</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'FPS'}) }}">FPS</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'FPS2'}) }}">FPS2</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'MMO'}) }}">MMO</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'horreur'}) }}">Horreur</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'action'}) }}">Action</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'sports'}) }}">Sports</a></li>
+                    <li><a href="{{ path('eventCat',{'cat': 'barbie'}) }}">Barbie</a></li>
+
+                    <!-- Side Categories
+                     /Side Categories -->
+                </ul>
+            </div>
+
+
+            <!-- Side Popular News -->
+            <div class="side-block">
+                <h4 class="block-title">Calendrier</h4>
+                <div class="block-content p-0">
+                    <!-- Single News Block -->
+                    <div class="row youplay-side-news">
+                        <div class="col-xs-3 col-md-4">
+                            <a href="{{ path('particpant_calendar')}}" class="angled-img">
+                                <div class="img">
+                                    <img src="assets/images/dark/E-sports.jpg" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-9 col-md-8">
+                            <h4 class="ellipsis"><a
+                                                    title="Mes evenements"></a></h4>
+                            <span class="date"><i class="fa fa-calendar"></i> Mes evenements</span>
+                        </div>
+                    </div>
+                    <!-- /Single News Block -->
+
+
+
+                </div>
+            </div>
+            <!-- /Side Popular News -->
+
+
+        </div>
+        <!-- /Right Side -->
+
+    </div>
+
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").keyup(function () {
+                var value = $("#search").val();
+                if(value.trim() == '')
+                    return ;
+                $.ajax({
+                    url: "event/rechreche",
+                    type: 'GET',
+                    data: {
+                        'searchValue': value
+                    },
+                    success: function (retour) {
+                        if (retour) {
+                            $("#affichage_events").empty();
+                            $.each(JSON.parse(retour), function (i, obj) {
+                                let tags="<a href='#'>"+obj.categorie.nomcategorie+"</a>";
+                                const elem='<div class="news-one">'
+                                    +' <div class="row vertical-gutter">'
+                                    +' <div class="col-md-4">'
+                                    +' <a href="/evenement/showEventFront/'+obj.idevent+'" class="angled-img">'
+                                    +' <div class="img">'
+                                    +'      <img src="/images/evenement/'+ obj.image+'"  alt="">'
+                                    +'  </div>'
+                                    +' </a>'
+                                    +' </div>'
+                                    +'  <div class="col-md-8">'
+                                    +'  <div class="clearfix">'
+                                    +' <h3 class="h2 pull-left m-0"><a href="/evenement/showEventFront/'+obj.idevent+'">'+ obj.nomevent +'</a></h3>'
+                                    +' <span class="date pull-right"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> Today</span>'
+                                    +'</div>'
+                                    +' <div class="tags">'
+                                    +'  <svg class="svg-inline--fa fa-tags fa-w-20" aria-hidden="true" data-prefix="fa" data-icon="tags" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"></path></svg>'
+
+                                    +tags+
+                                    +'</div>'
+                                    +'<div class="description">'
+                                    +' <p>'
+                                    + obj.description
+                                    +'</p>'
+                                    +'</div>'
+                                    +' <a href="/evenement/showEventFront/'+obj.idevent+'" class="btn read-more pull-left">Consulter</a>'
+                                    +'</div>'
+                                    +'</div>'
+                                    +'</div>';
+
+                                $('#affichage_events').append(elem);
+
+                            });
+                        } else
+                            $("#affichage_events").empty().append("<p class='text-center p-5'>Aucun evenement</p>")
+
+                    }
+                });
+            });
+            return false;
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,66 @@
+
+{% block title %}Evenement{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+
+     <!-- Magnific Popup -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/magnific-popup/dist/magnific-popup.css')}}"/>
+
+     <!-- Revolution Slider -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/settings.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/layers.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/navigation.css')}}">
+
+     <!-- Bootstrap Sweetalert -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.css')}}"/>
+
+     <!-- Social Likes -->
+     <link rel="stylesheet" href="{{asset('assets/vendor/social-likes/dist/social-likes_flat.css')}}" />
+
+     <!-- FontAwesome -->
+     <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fontawesome-all.min.js')}}"></script>
+     <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fa-v4-shims.min.js')}}"></script>
+
+     <!-- Youplay -->
+     <link rel="stylesheet" href="{{asset('assets/css/youplay.css')}}">
+
+     <!-- RTL (uncomment this to enable RTL support) -->
+     <!-- <link rel="stylesheet" href="assets/css/youplay-rtl.min.css" /> -->
+
+     <!-- Custom Styles -->
+     <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+
+     <!-- END: Styles -->
+
+ {% endblock %}
+
+<!-- Preloader -->
+<div class="page-preloader preloader-wrapp">
+
+    <img src="{{asset('/images/logo.png')}}" alt="">
+
+    <div class="preloader"></div>
+</div>
+<!-- /Preloader -->
+<div class="content-wrap">
+
+    <section class="youplay-banner banner-top youplay-banner-parallax small">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('images/banner-bg.jpg')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+                    <h1 class="h1">Evenements</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Banner -->
+{% block body %}
+
+{% endblock %}
+</div>

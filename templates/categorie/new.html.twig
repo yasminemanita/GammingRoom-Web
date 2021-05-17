@@ -1,0 +1,19 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}New Categorie{% endblock %}
+
+{% block body %}
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Ajouter Catégorie</h3>
+    </div>
+
+    <div class="card-body">
+
+    {{ include('categorie/_form.html.twig') }}
+    </div>
+</div>
+
+    <a href="{{ path('categorie_index') }}">back to list</a>
+{% endblock %}

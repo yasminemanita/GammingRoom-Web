@@ -1,0 +1,7 @@
+
+{{ form_start(form,{'attr':{'novalidate' : 'novalidate'}} ) }}
+
+    {{ form_widget(form) }}
+<input type="hidden" name="_token" value="{{ button_label|default('Save') }} ">
+<button class="btn btn-outline-warning">ajouter</button>
+{{ form_end(form) }}

@@ -1,0 +1,11 @@
+{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+<div class="comment-cont clearfix">
+
+    <div class="youplay-textarea">
+        <!--<textarea name="message" rows="5" placeholder="Votre commentaire..."></textarea>-->
+        {{ form_widget(form.commentaire,{'attr':{'class':'form-control','placeholder':'Votre commentaire...'}}) }}
+    </div>
+    <button class="btn btn-default pull-right js-commentaire">{{ button_label|default('Envoyer') }}</button>
+</div>
+
+{{ form_end(form) }}

@@ -1,0 +1,131 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block bannertop %}
+
+    <section class="youplay-banner banner-top youplay-banner-parallax">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('assets/images/dark/login2.png')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+
+                    <div class="row"><div class="col-md-8">
+
+
+                            <h1 class="h1">GamingRoom - Gaming Platforme</h1>
+
+
+
+
+                        </div></div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block body %}
+  
+    <div class="content-wrap">
+        
+            <!--
+    Banner
+
+    Additional classes:
+        .small
+        .xsmall
+        .big
+        .full
+-->
+
+        
+
+        
+    <!-- Features -->
+    <section class="youplay-features container mt-60 mb-30">
+        <div class="col-sm-4">
+            <div class="feature angled-bg">
+                <i class="fa fa-rss"></i>
+                <h3>Blog</h3>
+                <div>
+                    GamingRoom can be used for simple blogging, not only full-stack gaming template.
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="feature angled-bg">
+                <i class="fa fa-shopping-cart"></i>
+                <h3>Store</h3>
+                <div>
+                    If you want to sale goods, let's do it. This is so easy with GamingRoom.
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="feature angled-bg">
+                <i class="fa fa-users"></i>
+                <h3>Social Network</h3>
+                <div>
+                    Build your gaming social network, or forum for Clan members.
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- /Features -->
+
+
+
+
+    <!-- The True Emotions -->
+    <section class="container mt-120">
+        <div class="row">
+            <div class="col-xs-12">
+                
+    <!-- Review Form -->
+                <h2>Ajouter Avis</h2>
+                {{form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
+                    <div class="review-cont clearfix">
+
+                        <div class="youplay-textarea">
+                              {{ form_widget(form.avis,{'attr':{'rows':'5','placeholder':'Votre avis'}}) }}
+                            
+                        </div>
+                        {% if form_errors(form.avis) %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ form_errors(form.avis) }}
+                                </div>
+                            {% endif %}
+                        <div class="youplay-rating pull-right">
+                            <input type="radio" id="review-rate-5" name="review-rate" value="5">
+                            <label for="review-rate-5"><i class="fa fa-star"></i></label>
+                            <input type="radio" id="review-rate-4" name="review-rate" value="4">
+                            <label for="review-rate-4"><i class="fa fa-star"></i></label>
+                            <input type="radio" id="review-rate-3" name="review-rate" value="3">
+                            <label for="review-rate-3"><i class="fa fa-star"></i></label>
+                            <input type="radio" id="review-rate-2" name="review-rate" value="2">
+                            <label for="review-rate-2"><i class="fa fa-star"></i></label>
+                            <input type="radio" id="review-rate-1" name="review-rate" value="1">
+                            <label for="review-rate-1"><i class="fa fa-star"></i></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <button class="btn btn-default pull-right">Submit</button>
+                    </div>
+                
+                {{form_end(form)}}
+                <!-- /Review Form -->
+                
+            </div>
+        </div>
+    </section>
+    <!-- /The True Emotions -->
+
+
+
+{% endblock %}

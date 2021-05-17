@@ -1,0 +1,30 @@
+{% extends 'base_coach.html.twig' %}
+
+
+{% block title %}Modifier Cours{% endblock %}
+
+{% block body %}
+
+
+
+    <div class="col-md-10" align="center">
+        <h1>Modifier Cours </h1>
+        {% for messages in app.flashes('info') %}
+            {% for message in messages %}
+                <div class="alert alert-warning">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        {{ include('cour/_formCaptcha.html.twig', {'button_label': 'Update'}) }}
+        <div><a href="{{ path('cour_index_admin') }}">back to list</a></div>
+
+
+
+        {{ include('cour/_delete_form.html.twig') }}
+
+
+    </div>
+
+{% endblock %}

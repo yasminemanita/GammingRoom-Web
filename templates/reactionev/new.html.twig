@@ -1,0 +1,11 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}New Reactionev{% endblock %}
+
+{% block body %}
+    <h1>Create new Reactionev</h1>
+
+    {{ include('reactionev/_form.html.twig') }}
+
+    <a href="{{ path('reactionev_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,237 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Membre index{% endblock %}
+
+{% block body %}
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <!--<div class="card-header  bg-primary text-white">
+                            <h3 class="card-title">Liste des Membres</h3>
+                        </div>-->
+                        <table>
+                            <td><h1 style="color:royalblue;">Listes des Membres</h1></td>
+                            <td>
+                                <a href="{{ path('membre_index') }}"><i class="fas fa-sync"></i></a>
+                            </td>
+                        </table>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dt-buttons btn-group flex-wrap">
+                                           <!-- <a href="{{ path('membre_pdf') }}"><button class="btn btn-outline-info btn-block btn-flat" tabindex="0" aria-controls="example1" type="button"><span>Imprimer</span></button></a>-->
+                                            <a href="{{ path('membre_pdf') }}"><button type="button" class="btn btn-outline-primary btn-block"><i class="fas fa-file-pdf"></i>Imprimer</button></a>
+
+                                                </div></div><div class="col-sm-12 col-md-6"><div id="example1_filter" class="dataTables_filter">
+                                            <label style="color:royalblue;">Rechercher:
+
+                                                    <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Email" aria-controls="example1"  id="myInput" onkeyup="myFunction()">
+
+                                            </label>
+                                            <label>
+
+                                                <input type="search" style="width:180px" class="form-control form-control-sm" placeholder="Role" aria-controls="example1"  id="myInput2" onkeyup="myFunction2()">
+
+                                            </label>
+                                            <table>
+                                            <td>
+                                            <a href="{{ path('index_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-numeric-down"></i> Order by Id </button></a>
+                                            </td>
+                                             <td>
+                                            <a href="{{ path('name_ordered') }}"> <button type="button" style="height:50px;width:180px" class="btn btn-block bg-gradient-warning"><i class="fas fa-sort-alpha-down"></i> Order by NOM </button></a>
+                                             </td>
+                                            </table>
+                                        </div></div></div><div class="row"><div class="col-sm-12"><table id="affichage_membre" class="table table-bordered table-striped dataTable dtr-inline" role="grid" aria-describedby="example1_info">
+
+                                            <thead>
+                                            <tr role="row">
+                                                <th><h5 style="color:royalblue;">Id </h5></th>
+                                                <th><h5 style="color:royalblue;">Nom</h5></th>
+                                                <th><h5 style="color:royalblue;">Prenom</h5></th>
+                                                <th><h5 style="color:royalblue;">Sexe</h5></th>
+                                                <th><h5 style="color:royalblue;">Email</h5></th>
+                                                <th><h5 style="color:royalblue;">Role</h5></th>
+                                                <th><h5 style="color:royalblue;">Active</h5></th>
+                                                <th><h5 style="color:royalblue;">Ban Duration</h5></th>
+                                                <th><h5 style="color:royalblue;">Last Time ban</h5></th>
+                                                <th><h5 style="color:royalblue;">actions</h5></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for membre in membres %}
+                                                {% if membre.role != "Admin" %}
+                                                <tr>
+                                                    <td><h5 style="color:royalblue;">{{ membre.id }}</h5></td>
+                                                    <td>{{ membre.nom }}</td>
+                                                    <td>{{ membre.prenom }}</td>
+                                                    <td>{{ membre.genre }}</td>
+                                                    <td>{{ membre.email }}</td>
+                                                    <td>{% if membre.role == 'Coach' %}<h5 style="color:#f39c12;">{{ membre.role }}{% endif %}
+                                                            {% if membre.role == 'Membre' %}<h5 style="color:#00a65a;">{{ membre.role }}{% endif %}
+                                                    </td>
+                                                    <td>{{ membre.active ? 'Yes' : 'No' }}</td>
+                                                    <td>{{ membre.banDuration }}</td>
+                                                    <td>{{ membre.lastTimeban ? membre.lastTimeban|date('Y-m-d H:i:s') : '' }}</td>
+                                                    <td>
+                                                        <a href="{{ path('membre_show', {'id': membre.id}) }}"> <button type="button"  class="btn btn-block btn-outline-info" > Afficher</button></a>
+                                                        {% if membre.active == 0 and membre.role=='Coach' and membre.banDuration==0 %}
+                                                            <form action="{{ path('membre_activer' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-success" >Activer</button>
+                                                            </form>
+                                                            <form method="post" action="{{ path('membre_delete', {'id': membre.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ membre.id) }}">
+                                                                <button class="btn btn-block btn-outline-danger">Refuser</button>
+                                                            </form>
+                                                        {% endif %}
+                                                        {% if membre.active == 1  %}
+                                                            <form action="{{ path('membre_desactiver' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-danger" ><i class="fas fa-ban"></i></button>
+                                                            </form>
+                                                        {% endif %}
+                                                        {% if membre.active==0 and membre.lastTimeban != null %}
+                                                            <form action="{{ path('membre_activerBan' , {'id':membre.id}) }}">
+                                                                <button class="btn btn-block btn-outline-success" >Activer</button>
+                                                            </form>
+                                                        {% endif%}
+
+                                                      <!--  <a href="{{ path('membre_edit', {'id': membre.id}) }}">edit</a> -->
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                            {% else %}
+                                                <tr>
+                                                    <td colspan="16">no records found</td>
+                                                </tr>
+
+                                            {% endfor %}
+                                            </tbody>
+                                        </table></div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination">{{ knp_pagination_render(membres) }}</ul></div></div></div></div>
+
+                                <!-- doughutChart -->
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title" style="color:royalblue;" >
+                                        <i class="fas fa-chart-pie mr-1"></i>
+                                        Membres
+                                    </h3>
+                                    <div class="card-tools">
+                                        <ul class="nav nav-pills ml-auto">
+
+                                            <li class="nav-item">
+                                                <a class="nav-link active" href="#sales-chart" data-card-widget="collapse">Statistique</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="tab-content p-0">
+                                        <!-- Morris chart - Sales -->
+
+                                        <div class="chart tab-pane active" id="sales-chart" style="position: relative; height: 300px;">
+                                            <canvas id="sales-chart-canvas-pie" height="300" style="height: 300px;"></canvas>
+                                        </div>
+                                    </div>
+                                </div><!-- /.card-body -->
+                            </div>
+                                <!-- End -->
+
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                <!-- /.card-body -->
+
+
+
+                </div>
+
+            </div></div></section>
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("affichage_membre");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[4];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+
+    <script>
+        function myFunction2() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput2");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("affichage_membre");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[5];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock %}
+{%  block scripts %}
+    <script>
+        // Donut Chart
+        var pieChartCanvas = $('#sales-chart-canvas-pie').get(0).getContext('2d')
+        var pieData = {
+            labels: [
+                {% for count in counts %}
+                "{{ count.role }}",
+                {% endfor %}
+            ],
+            datasets: [
+                {
+                    data: [{% for count in counts %}
+                        {{ count.number }},
+                        {% endfor %}],
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+                }
+            ]
+        }
+        var pieOptions = {
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            responsive: true
+        }
+        // Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+        // eslint-disable-next-line no-unused-vars
+        var pieChart = new Chart(pieChartCanvas, { // lgtm[js/unused-local-variable]
+            type: 'doughnut',
+            data: pieData,
+            options: pieOptions
+        })
+    </script>
+{% endblock %}
+
+
+
+

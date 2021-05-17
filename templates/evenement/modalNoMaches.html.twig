@@ -1,0 +1,64 @@
+<div class="container youplay-content">
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <div role="tabpanel">
+
+                <div class="tab-content">
+
+                    <!-- All Matches -->
+                    <div role="tabpanel" class="tab-pane active" id="tab-all">
+                        <div class="youplay-matches-list">
+                            {% for m in maches %}
+
+                                <a class="youplay-single-match">
+
+                                    <div class="pull-left">
+                                        <div class="angled-img">
+                                            <div class="img">
+                                                <img  src="{{ asset('/images/membre/' ~ m.member.image) }}"  alt="NAVI">
+                                            </div>
+                                        </div>
+                                        <h5 class="text-center">
+                                            <td>{{ m.member.nom }}</td>
+                                            <td>{{ m.member.prenom }}</td>
+                                        </h5>
+                                    </div>
+                                            <div class="pull-left ml-30">
+                                                <div class="angled-img">
+                                                    <div class="img">
+                                                        <img src="{{ asset('/assets/images/dark/intero.png') }}"  alt="EHOME">
+                                                    </div>
+                                                </div>
+                                                <h5 class="text-center">
+                                                    <td>Inconnu</td>
+                                                </h5>
+                                            </div>
+                                    <div class="pull-left ml-30">
+                                        <h3 class="youplay-match-title">{{ m.evenement.nomevent }}</h3>
+                                        <div class="date">{{ m.evenement.description }}</div>
+                                    </div>
+
+                                    <div class="label youplay-match-count">{{ m.evenement.datedeb ? m.evenement.datedeb|date('Y-m-d') : '' }}</div>
+
+                                    <div class="clearfix"></div>
+                                </a>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                    <!-- /All Matches -->
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+    </div>
+
+</div>

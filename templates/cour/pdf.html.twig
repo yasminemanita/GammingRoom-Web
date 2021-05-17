@@ -1,0 +1,30 @@
+<table id="example1" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>Nb participant</th>
+        <th>Date creation</th>
+        <th>Imagecours</th>
+        <th>Lienyoutube</th>
+        <th>Categorie</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cour in cours %}
+    <tr>
+
+
+        <td>{{cour.nomcours }}</td>
+        <td>{{ cour.description }}</td>
+        <td>{{ cour.tags }}</td>
+        <td>{{ cour.nbParticipant }}</td>
+        <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+        <td><img src="{{ asset('/images/cours/' ~ cour.imagecours) }}" width="40px" height="40px"></td>
+        <td>{{ cour.lienyoutube }}</td>
+        <td>{{ cour.categorie.nomcategorie }}</td>
+    </tr>
+    </tbody>
+</table>

@@ -1,0 +1,58 @@
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{{ path('admin_home') }}" class="brand-link">
+      <img src="{{asset('assets/dist/img/logo.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Dashboard Coach</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{ asset('images/membre/'~app.user.image~'') }}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{ app.user.nom}} {{ app.user.prenom }}</a>
+        </div>
+      </div>
+      
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          
+          <li class="nav-item">
+            <a href="{{path('home')}}" class="nav-link" >
+              <p>
+                home
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <!-- Add icon library -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <a href="{{path('cour_index_admin')}}" class="nav-link">
+              <i class="fa fa-caret-square-o-right"></i>
+              <p>
+                Cours
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{path('app_logout')}}" class="nav-link" onclick="return confirm('Êtes-vous sûr?')">
+              <i class="fas fa-sign-out-alt"></i>
+              <p>
+                Logout
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

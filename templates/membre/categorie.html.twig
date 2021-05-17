@@ -1,0 +1,90 @@
+{% extends 'base_clientSide.html.twig' %}
+{% block bannertop %}
+
+    <section class="youplay-banner banner-top youplay-banner-parallax">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('assets/images/dark/login3.jpg')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+
+                    <div class="row"><div class="col-md-8">
+
+
+                            <h1 class="h1">GamingRoom- Welcome</h1>
+
+
+
+                            <p class="lead">
+                                You are not limited to the features of this template. It is suitable for gaming site, and for any business project. Pre-packed demos will help you to quickly run your new creative website.
+                            </p>
+                            <br>
+                            <a class="btn btn-md active" href="#demo"><i class="fa fa-eye"></i>&nbsp; Demo</a><a class="btn btn-md" href="https://themeforest.net/item/youplay-game-template-based-on-bootstrap/11306207?ref=_nK"><i class="fa fa-shopping-cart"></i>&nbsp; Purchase</a>
+
+
+
+                        </div></div>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
+
+{% block body %}
+
+    <!-- <section class="youplay-banner banner-top youplay-banner-parallax xsmall">
+
+            <div class="image" data-speed="0.4">
+                <img src="/images/banner-bg.jpg" alt="" class="jarallax-img">
+            </div>
+
+
+        <div class="info">
+            <div>
+                <div class="container">
+
+
+                        <h1 class="h1">Checkout</h1>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>-->
+    <div class="container youplay-content">
+
+        <div class="col-md-9">
+            <!-- Billing Information -->
+            <h2 class="mt-0">Billing Details</h2>
+
+            <!-- Country -->
+            <p>Select favorite game categorie ::</p>
+            <label class="youplay-select">
+               <select id="categoryDropdown" onchange="getValue(this)">
+                   {% for category in categories %}
+                   <option value="{{ category.idcat }}">{{ category.nomcategorie }}</option>
+                   {% endfor %}
+               </select>
+            </label>
+        </div>
+        <div class="align-right" id="a">
+
+        </div>
+
+    </div>
+<script>
+    function getValue(sel) {
+       var id = sel.options[sel.selectedIndex].value;
+
+        document.getElementById("a").innerHTML = '<a href="{{ path('add_category', { idCategorie: 5}) }}" class="btn btn-lg">Place Order</a>';
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}Edit Reactionev{% endblock %}
+
+{% block body %}
+    <h1>Edit Reactionev</h1>
+
+    {{ include('reactionev/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('reactionev_index') }}">back to list</a>
+
+    {{ include('reactionev/_delete_form.html.twig') }}
+{% endblock %}

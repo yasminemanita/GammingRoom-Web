@@ -1,0 +1,168 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+
+{% block body %}
+
+
+
+<div class="container youplay-news"  style="
+    margin-top: 200px;
+" >
+
+        <!-- News List -->
+
+    
+
+
+    <div class="col-md-9" id="affichage_cours">
+        {% for cour in cours %}
+            <!-- Single News Block -->
+
+            <div class="news-one">
+                <div class="row vertical-gutter">
+                    <div class="col-md-4">
+                        <a href="blog-post-1.html" class="angled-img">
+                            <div class="img">
+                                <img src="{{ asset('/images/cours/' ~ cour.imagecours) }}"  alt="">
+                            </div>
+                           </a>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="clearfix">
+                            <h3 class="h2 pull-left m-0"><a href="blog-post-1.html">{{ cour.nomcours }}</a></h3>
+                            <span class="date pull-right"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> Today</span>
+                        </div>
+                        <div class="tags">
+                            <svg class="svg-inline--fa fa-tags fa-w-20" aria-hidden="true" data-prefix="fa" data-icon="tags" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"></path></svg><!-- <i class="fa fa-tags"></i> -->
+                            {% for  tag in cour.tags |split(' ') %}
+                                <a href="#">{{tag}}</a>,
+                            {% endfor %}
+                        </div>
+                        <div class="description">
+                            <p>
+                                {{ cour.description }}
+                            </p>
+                        </div>
+                        <a href="{{path('cour_show', {id: cour.id})}}" class="btn read-more pull-left">Read More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /Single News Block -->
+
+        {% else %}
+            <p> no Cours </p>
+        {% endfor %}
+
+            <!-- Pagination -->
+           <!-- <ul class="pagination" >
+
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">Next</a></li>
+
+            </ul>-->
+        {{ knp_pagination_render(cours) }}
+
+            <!-- /Pagination -->
+        </div>
+        <!-- /News List -->
+
+        <!-- Right Side -->
+        <div class="col-md-3">
+
+<!-- Side Search -->
+<div class="side-block">
+    <p>Search by cours:</p>
+    <form action={{ path('rechrecheCour') }}>
+        <div class="youplay-input">
+            <input id="search" type="text" name="recherche" placeholder="enter search term" data-action="cour/rechreche">
+        </div>
+    </form>
+</div>
+<!-- /Side Search -->
+
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+<!--rechercher with ajax-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js
+"></script>
+    <script>
+        $(document).ready(function () {
+            $("#search").keyup(function () {
+                var value = $("#search").val();
+                if(value.trim() == '')
+                    return ;
+                $.ajax({
+                    url: "rechreche",
+                    type: 'GET',
+                    data: {
+                        'searchValue': value
+                    },
+                    success: function (retour) {
+                        if (retour) {
+                            $("#affichage_cours").empty();
+                            $.each(JSON.parse(retour), function (i, obj) {
+                                let tags="";
+                                obj.tags.split(' ').forEach(tag=>tags+="<a href='#'>"+tag+"</a>")
+                                const elem='<div class="news-one">'
+                                    +' <div class="row vertical-gutter">'
+                                    +' <div class="col-md-4">'
+                                    +' <a href="blog-post-1.html" class="angled-img">'
+                                    +' <div class="img">'
+                                                    +'      <img src="/images/cours/'+ obj.imagecours+'"  alt="">'
+                                                        +'  </div>'
+                                                +' </a>'
+                                            +' </div>'
+                                        +'  <div class="col-md-8">'
+                                            +'  <div class="clearfix">'
+                                                +' <h3 class="h2 pull-left m-0"><a href="blog-post-1.html">'+ obj.nomcours +'</a></h3>'
+                                                +' <span class="date pull-right"><svg class="svg-inline--fa fa-calendar-alt fa-w-14" aria-hidden="true" data-prefix="fa" data-icon="calendar-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg=""><path fill="currentColor" d="M436 160H12c-6.6 0-12-5.4-12-12v-36c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48v36c0 6.6-5.4 12-12 12zM12 192h424c6.6 0 12 5.4 12 12v260c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V204c0-6.6 5.4-12 12-12zm116 204c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12H76c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm128 128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40zm0-128c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12v-40z"></path></svg><!-- <i class="fa fa-calendar"></i> --> Today</span>'
+                                                +'</div>'
+                                            +' <div class="tags">'
+                                                +'  <svg class="svg-inline--fa fa-tags fa-w-20" aria-hidden="true" data-prefix="fa" data-icon="tags" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"></path></svg>'
+
+                                                +tags+
+                                                +'</div>'
+                                            +'<div class="description">'
+                                                +' <p>'
+                                                    + obj.description
+                                                    +'</p>'
+                                                +'</div>'
+                                            +' <a href="/cour/'+obj.id+'" class="btn read-more pull-left">Read More</a>'
+                                            +'</div>'
+                                        +'</div>'
+                                +'</div>';
+
+                                $('#affichage_cours').append(elem);
+
+                            });
+                        } else
+                            $("#affichage_cours").empty().append("<p class='text-center p-5'>Aucun cours</p>")
+
+                    }
+                });
+            });
+            return false;
+        });
+    </script>
+
+
+
+
+
+
+    {% endblock %}
+

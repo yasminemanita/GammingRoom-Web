@@ -1,0 +1,102 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block stylesheets %}
+  <style>
+    .centerImg{
+        display: block;
+        margin: 0 auto;
+        margin-top:20px;
+    }
+
+  </style>
+{% endblock %}
+{% block body %}
+  <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>{{title}} Jeux</h1>
+          </div>
+          <div class="col-sm-6">
+          
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-10 container" >
+                            <!-- general form elements -->
+                            <div class="card card-primary">
+                            <div class="card-header">
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            
+                            {{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+                                <div class="card-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Nom</label>
+                                     {{ form_widget(form.nom,{'attr':{'class':'form-control','placeholder':'Nom Jeux'}}) }}
+                                    {% if form_errors(form.nom) %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ form_errors(form.nom) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Description</label>  
+                                    {{ form_widget(form.description,{'attr':{'class':'form-control'}}) }}
+                                    {% if form_errors(form.description) %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ form_errors(form.description) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Platforme</label>
+                                      {{ form_widget(form.typePlateforme,{'attr':{'class':'form-control'}}) }}
+                                    {% if form_errors(form.typePlateforme) %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ form_errors(form.typePlateforme) }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputFile">Image</label>
+                                    <div class="input-group">
+                                    <div class="custom-file">
+                                        <label class="custom-file-label" for="exampleInputFile">Image</label>
+                                        {{ form_widget(form.fileimage,{'attr':{'class':'custom-file-input'}}) }}
+                                        {% if form_errors(form.fileimage) %}
+                                            <div class="alert alert-danger" role="alert">
+                                                {{ form_errors(form.fileimage) }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    </div>
+                                    
+                                    
+                                        {% if isUpdate %}
+                                                <img class="centerImg" src="{{asset('images/jeux/')}}{{jeu.image}}" width="500" height="500" />
+                                          
+                                        {%  endif %}
+                                </div>
+                                </div>
+                                <!-- /.card-body -->
+
+                                <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            {{form_end(form)}}
+                            </div>
+                <!-- /.card -->
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

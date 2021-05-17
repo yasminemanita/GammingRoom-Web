@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CategoriMembre{% endblock %}
+
+{% block body %}
+    <h1>Edit CategoriMembre</h1>
+
+    {{ include('categori_membre/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('categori_membre_index') }}">back to list</a>
+
+    {{ include('categori_membre/_delete_form.html.twig') }}
+{% endblock %}

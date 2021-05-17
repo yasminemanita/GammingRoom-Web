@@ -1,0 +1,58 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    membre_directory: '%kernel.project_dir%/public/images/membre'
+    jeux_directory: '%kernel.project_dir%/public/images/jeux'
+    produit_directory: '%kernel.project_dir%/public/images/produits'
+    cours_directory: '%kernel.project_dir%/public/images/cours'
+    images_directory: '%kernel.project_dir%/public/images/evenement'
+    twilio_sid: ACf2316c30eff2690e38ae96d0093b6073
+    twilio_token: 4fc60f7830c275ead6de48538fc75f92
+    twilio_number: '+16189874470'
+
+services:
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+      - '../src/Kernel.php'
+      - '../src/Tests/'
+
+  # controllers are imported separately to make sure services can be injected
+  # as action arguments even if you don't extend any base controller class
+  App\Controller\:
+    resource: '../src/Controller/'
+    tags: [ 'controller.service_arguments' ]
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+  app.websocket.topic.acme:
+        class: App\Websocket\Topic\AcmeTopic
+        tags:
+            - { name: gos_web_socket.topic }  
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
+  app.form.flow.courTypeFlow:
+    class: App\Form\CourTypeFlow
+    autoconfigure: true
+    public: true
+  App\EventListener\FullCalendarListener:
+      tags:
+          - { name: 'kernel.event_listener', event: 'fullcalendar.set_data', method: loadEvents }
+  twilio.client:
+      class: Twilio\Rest\Client
+      arguments: ['%twilio_sid%', '%twilio_token%']
+  
+   # Add an alias for the twilio.client service
+  Twilio\Rest\Client: '@twilio.client'

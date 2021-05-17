@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('evenement_delete', {'idevent': evenement.idevent}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ evenement.idevent) }}">
+    <br>
+    <button href="{{ path('evenement_index') }}" style="width: 100%;" type="submit" class="btn btn-danger"  style="width: 100px;">Delete</button>
+</form>

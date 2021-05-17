@@ -1,0 +1,77 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block bannertop %}
+    <section class="youplay-banner banner-top youplay-banner-parallax small">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('assets/images/dark/login2.png')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="youplay-user-navigation">
+            <div class="container">
+                <ul>
+                    <li><a href="{{ path('profil', {'id': user.id}) }}">Profile</a></li>
+                     {% if app.user.role == 'Coach' %}
+                    <li><a href="{{path('cour_new_admin')}}">Cours</a></li>
+                    {% endif %}
+                    <li class="active"><a href="{{ path('membre_edit' , {'id' :user.id} )}}">Settings</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info">
+            <div>
+                <div class="container youplay-user">
+                    <a href="{{ asset('images/membre/'~user.image~'') }}" class="angled-img image-popup">
+                        <div class="img">
+                            <img src="{{ asset('images/membre/'~user.image~'') }}" width="200px" height="150px" alt="">
+                        </div>
+                        <i class="fa fa-search-plus icon"></i>
+                    </a>
+                    <div class="user-data">
+                        <h2>{{ user.prenom }} {{ user.nom }}</h2>
+                        <div class="location"><i class="fas fa-user"></i> {{ user.role }} - {{ user.genre }}</div>
+
+                        <div class="location"><i class="fas fa-phone"></i> {{ user.numeroTel }}</div>
+
+                        <div class="location"><i class="fas fa-envelope-square"></i> {{ user.email }}</div>
+                        <!--<div class="activity">
+                            <div>
+                                <div class="num">69</div>
+                                <div class="title">Posts</div>
+                            </div>
+                            <div>
+                                <div class="num">12</div>
+                                <div class="title">Games</div>
+                            </div>
+                            <div>
+                                <div class="num">689</div>
+                                <div class="title">Followers</div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+
+               <!-- <div class="container mt-20">-->
+                    <!--<a href="#" class="btn btn-sm btn-default ml-0">Add Friend</a>
+                    <a href="#" class="btn btn-sm btn-default">Private Message</a>-->
+                    <!--<form method="post" action="{{ path('compte_delete', {'id': app.user.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ app.user.id) }}">
+                        <button class="btn btn-sm btn-default ml-0">supprimer Compte</button>
+                    </form>
+                </div>-->
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrap">
+    {% endblock %}
+    {% block contentfin %}
+</div>
+{% endblock %}
+{% block body %}
+    {{ include('membre/_formEdit.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}

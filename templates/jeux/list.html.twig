@@ -1,0 +1,131 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block javascripts %}
+<script>
+    $(function(){
+        
+        getAll();
+        $('#noRez').hide();
+        $('#searchFiled').change(function(){
+            const filter=$(this).val();
+             if(filter.trim() == ''){
+                     getAll();
+                 return false;
+        }
+             $.get("/api/jeux/"+filter, function(data, status){
+                 data=JSON.parse(data);
+                 if(data.length==0){
+                     $('#noRez').show();
+                    $('#jeuxCont').empty();
+                 }else{
+                     $('#noRez').hide();
+                      $('#jeuxCont').empty();
+                     data.forEach(jeu=>{
+                        $('#jeuxCont').append(getHtml(jeu));
+                     }
+                     )
+                 }
+            });
+        });
+    });
+
+    function getAll(){
+             $.get("/api/jeux/all", function(data, status){
+                 data=JSON.parse(data);
+                 if(data.length==0){
+                     $('#noRez').show();
+                 }else{
+                     $('#noRez').hide();
+                     data.forEach(jeu=>{
+                        $('#jeuxCont').append(getHtml(jeu));
+                     }
+                     )
+                 }
+            });
+    }
+    function getHtml(jeu){
+        return ' <div class="news-one">'
+                            +'<div class="row vertical-gutter">'
+                                +' <div class="col-md-4">'
+                                  +'   <a href="blog-post-1.html" class="angled-img">'
+                                  +'       <div class="img">'
+                                 +'            <img src="images/jeux/'+jeu.image+'" alt="">'
+                                +'         </div>'
+                               +'          </a>'
+                              +'   </div>'
+                              +'   <div class="col-md-8">'
+                             +'        <div class="clearfix">'
+                              +'           <h3 class="h2 pull-left m-0"><a href="blog-post-1.html">'+jeu.nom+'</a></h3>'
+                           +'          </div>'
+                            +'         <div class="description">'
+                            +'             <p>'+jeu.description+'                </p>'
+                           +'          </div>'
+                          +'           <a href="/jeux/'+jeu.nom+'" class="btn read-more pull-left">Jouer</a>'
+                        +'         </div>'
+                        +'     </div>'
+                      +'   </div>';
+    }
+</script>
+{% endblock %}
+{% block body %}
+
+<section class="youplay-banner banner-top youplay-banner-parallax small">
+    
+        <div class="image" data-speed="0.4">
+            <img src="/images/banner-bg.jpg" alt="" class="jarallax-img">
+        </div>
+    
+
+    <div class="info">
+        <div>
+            <div class="container">
+                
+                
+                    <h1 class="h1">Nos Jeux</h1>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+    <div class="container youplay-news">
+
+        <!-- News List -->
+        <div id="jeuxCont" class="col-md-9">
+
+            <!-- Single News Block -->
+            
+            <!-- /Single News Block -->
+            
+        </div>
+        <div class="news-one" id="noRez" style=" display:none ">
+                <h1>Aucun résultat trouvé</h1>
+            </div>
+        <!-- /News List -->
+
+        <!-- Right Side -->
+        <div class="col-md-3">
+            
+<!-- Side Search -->
+<div class="side-block">
+    <p>Search :</p>
+    <form action="search.html">
+        <div class="youplay-input">
+            <input type="text" id="searchFiled" name="search" placeholder="enter search term">
+        </div>
+    </form>
+</div>
+<!-- /Side Search -->
+
+<!-- /Side Categories -->
+
+
+        </div>
+        <!-- /Right Side -->
+
+    </div>
+
+
+{% endblock %}

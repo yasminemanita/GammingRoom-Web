@@ -1,0 +1,16 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}New Cour{% endblock %}
+
+{% block body %}
+<div class="col-md-10" align="center">
+    <h1>Créer un nouveau cours</h1>
+
+
+    {{ include('cour/_form.html.twig') }}
+
+
+    <a href="{{ path('cour_index') }}">back to list</a>
+</div>
+
+{% endblock %}

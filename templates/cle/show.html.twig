@@ -1,0 +1,29 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Cle{% endblock %}
+
+{% block body %}
+    <h1>Clé</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Idcle</th>
+                <td>{{ cle.idcle }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ cle.code }}</td>
+            </tr>
+            <tr>
+                <th>Produit</th>
+                <td>{{ cle.getProduit().getLibelle() }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+    {{ include('cle/_delete_form.html.twig') }}
+{% endblock %}

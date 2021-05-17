@@ -1,0 +1,254 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('info') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <h1> {{ cour.nomcours }} </h1>
+    <p>
+
+
+    <table>
+
+
+        <tr>
+            <td><img src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="200px">
+            </td>
+            <h1></h1>
+
+            <td>
+                <iframe width="900" height="315" src="{{ cour.lienyoutube }}" title="YouTube video player"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+            </td>
+
+        </tr>
+    </table>
+
+
+
+    </p>
+
+
+    <table class="table">
+        <tbody>
+
+        <tr>
+            <th>Lien youtube</th>
+            <td>{{ cour.lienyoutube }}</td>
+        </tr>
+
+
+        <tr>
+            <th>Déscription</th>
+            <td>{{ cour.description }}</td>
+        </tr>
+        <tr>
+            <th>Catégorie</th>
+            <td>{{ cour.categorie.nomcategorie }}</td>
+        </tr>
+        <tr>
+            <th>Nombre de Participants</th>
+            <td>{{ cour.nbParticipant }}</td>
+        </tr>
+        <tr>
+            <th>Date de Création</th>
+            <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Mots Clés</th>
+            <td>{{ cour.tags }}</td>
+        </tr>
+
+
+        </tbody>
+    </table>
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <p> <!-- Use an element to toggle between a like/dislike icon -->
+        <i onclick="ajouterLike({{ cour.id }},1)" class="fa  fa-heart fa-3x" style="color:#9d1e15"></i>
+
+        {% set countLike = 0 %}
+        {% set countDislike = 0 %}
+        {% for reaction in reactions %}
+            {% if reaction.cour.id == cour.id %}
+                {% if reaction.interaction == 1 %}
+                    {% set countLike = countLike + 1 %}
+                {% elseif reaction.interaction == -1 %}
+                    {% set countDislike = countDislike + 1 %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        <label id="nb-like-{{ cour.id }}">
+            {{ countLike }}
+        </label>
+        <i onclick="ajouterLike({{ cour.id }},-1)" class="fa fa-heartbeat fa-3x" style="color: #6B89FF"></i>
+        <label id="nb-dislike-{{ cour.id }}">
+            {{ countDislike }}
+        </label>
+        <!--barre de progression des like and dislike-->
+        <br>
+        <br>
+        <label id="pource">Likes Progression:</label>
+    <div class="col-md-6 m-auto progress-box">
+        <div class="progress">
+            <div id="like-bar-{{ cour.id }}"
+                 class="progress-bar progress-bar-striped position-relative bg-dark"
+                 style="width:{{ cour.pourcentageLike }}%">
+            </div>
+        </div>
+    </div>
+    <!--commentaire-->
+
+    <div id="emplacement-commentaires-{{ cour.id }}" class="row m-5 bg-white">
+        <form method="post" id="commentaire" action="javascript:ajouterCommentaire({{ cour.id }} , 0)"
+              class="col-md-10">
+            <p>
+
+                <textarea name="vos commentaires" id="contenu-commenataire" style="color: #0a001f" cols="50" rows="2"
+                          PLACEHOLDER="Ajouter votre commentaire"></textarea>
+                <button type="submit"><i class="fa fa-arrow-circle-right fa-2x" aria-hidden="true"></i></button>
+            </p>
+            <label for="vos commentaires">Vos commentaires:</label><br/>
+        </form>
+
+        {% for reaction in reactions %}
+            {% if reaction.cour.id == cour.id %}
+                {% if reaction.interaction == 0 %}
+                    <div class="col-md-10">
+                        <p>{{ reaction.membre.nom }} {{ reaction.membre.prenom }} : {{ reaction.commentaire }}</p>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    <tab
+    <br>
+    <!--
+        <label>Vos commentaires</label>
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Membre</th>
+                <th>Commentaire</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+            <tr>
+                <td>{{ cour.membre.prenom }}</td>
+
+            </tr>
+            </tbody>
+
+        </table> -->
+    <!--test comm-->
+
+
+    <!---->
+    {% set estInscrit = false %}
+    {% for participant in participants %}
+        {% if participant.cour.id == cour.id %}
+            {% if app.user %}
+                {% if participant.membre.id == app.user.id %}
+                    {# {% if == app.user.id  %} #}
+                    {% set estInscrit = true %}
+                {% endif %}
+
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+
+
+    {% if estInscrit %}
+        <h2 class="text-light">Vous êtes inscrit à {{ cour.nomcours }} Cours</h2>
+    {% else %}
+        <form action="{{ path('participantcours_new',{'id':cour.id}) }}">
+            <button class="btn read-more pull-left" id="btninscrip"> Inscription</button>
+        </form>
+    {% endif %}
+
+
+
+    <div class="m-5">
+
+        <a href="{{ path('cour_index') }}">back to list</a>
+    </div>
+
+    <div id="a" class="a"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script id="ajax-like-dislike">
+        function ajouterLike(idCour, typeLike) {
+            $.ajax({
+                type: 'GET',
+                url: '/Reactioncours/reaction/ajout',
+                data: {
+                    'typeReactioncours': typeLike,
+                    'idCour': idCour
+                },
+                success: function (retour) {
+                    obj = JSON.parse(retour);
+                    if(obj.notFound){
+                        alert("You have to login first");
+                        return;
+                    }
+                    console.log("nb like : " + obj.nbLike + "/ nbDislike : " + obj.nbDislike);
+                    $("#a").append("<div></div>")
+                    $("#nb-like-" + idCour).empty().append(obj.nbLike);
+                    $("#nb-dislike-" + idCour).empty().append(obj.nbDislike);
+                    $("#like-bar-" + idCour).attr('style', 'width:' + obj.pourcentage + '%');
+
+                },
+                error: function () {
+                    alert("Connectez vous d'abord");
+                }
+            });
+        }
+
+        function ajouterCommentaire(idCour, typeLike) {
+            let contenuCommentaire = $("#contenu-commenataire").val();
+            $("#contenu-commenataire").val("");
+            $.ajax({
+                type: 'GET',
+                url: '/Reactioncours/commentaire/ajout',
+                data: {
+                    'typeReactioncours': typeLike,
+                    'idCour': idCour,
+                    'contenuCommentaire': contenuCommentaire,
+                },
+                success: function (retour) {
+                    obj = JSON.parse(retour);
+                    if(obj.notFound){
+                        alert("You have to login first");
+                        return;
+                    }
+                    $("#emplacement-commentaires-" + idCour).append(
+                        "<div class='col-md-10'>" +
+                        "<p>" + obj.nomPrenom + " : " + obj.contenuCommentaire + "</p>" +
+                        "</div>"
+                    );
+
+                },
+                error: function () {
+                    alert("Connectez vous d'abord");
+                }
+            });
+        }
+    </script>
+
+
+    
+
+
+
+
+{% endblock %}

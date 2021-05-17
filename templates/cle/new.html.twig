@@ -1,0 +1,13 @@
+{% extends 'base_admin.html.twig' %}
+{% block title %}New Cle{% endblock %}
+
+{% block body %}
+<div class="col-md-6">
+
+<h1>Ajouter Clé</h1>
+
+    {{ include('cle/_form.html.twig') }}
+
+    <a href="{{ path('cle_index') }}"><button type="button" class="btn btn-outline-info"> liste de clés </button></a>
+</div>
+{% endblock %}

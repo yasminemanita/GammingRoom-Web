@@ -1,0 +1,26 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+    <h1 style="color:royalblue;">Categorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id cat</th>
+                <td>{{ categorie.idcat }}</td>
+            </tr>
+            <tr>
+                <th>Nom categorie</th>
+                <td>{{ categorie.nomcategorie }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('categorie_edit', {'idcat': categorie.idcat}) }}"><button class="btn btn-block bg-gradient-secondary">Modifier </button></a>
+
+    <a href="{{ path('categorie_index') }}">
+        <button class="btn btn-block bg-gradient-primary">Retour </button></a>
+
+
+{% endblock %}

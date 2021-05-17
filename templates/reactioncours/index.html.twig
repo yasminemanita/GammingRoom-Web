@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reactioncours index{% endblock %}
+
+{% block body %}
+    <h1>Reactioncours index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Interaction</th>
+                <th>Commentaire</th>
+                <th>DateCreation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reactioncour in reactioncours %}
+            <tr>
+                <td>{{ reactioncour.id }}</td>
+                <td>{{ reactioncour.interaction }}</td>
+                <td>{{ reactioncour.commentaire }}</td>
+                <td>{{ reactioncour.dateCreation ? reactioncour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('reactioncours_show', {'id': reactioncour.id}) }}">show</a>
+                    <a href="{{ path('reactioncours_edit', {'id': reactioncour.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('reactioncours_new') }}">Create new</a>
+{% endblock %}

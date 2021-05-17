@@ -1,0 +1,210 @@
+
+{% extends 'base_clientSide.html.twig' %}
+
+
+{% block body %}
+
+<section class="youplay-banner banner-top youplay-banner-parallax small">
+    
+        <div class="image" data-speed="0.4">
+            <img src="/images/banner-bg.jpg" alt="" class="jarallax-img">
+        </div>
+    
+
+    <div class="info">
+        <div>
+            <div class="container">
+                
+                
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<form action="/checkout" methode="POST">
+    <div class="container youplay-content" style="
+    margin: 100px auto;
+">
+
+        <div class="col-md-9">
+            <!-- Billing Information -->
+            <h2 class="mt-0">Detail de la commande</h2>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Nom:</p>
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_firstname" placeholder="First Name">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p>Prénom:</p>
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_lastname" placeholder="Last Name">
+                    </div>
+                </div>
+            </div>
+
+            <p>Adresse:</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_street" placeholder="Street Address">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_apartment" placeholder="Apartment, suite, unit etc.">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <p>Région:</p>
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_city" placeholder="City">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>Pays:</p>
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_country" placeholder="Country">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <p>Code Postal:</p>
+                    <div class="youplay-input">
+                        <input type="text" required name="billing_postcode" placeholder="Postcode">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Email:</p>
+                    <div class="youplay-input">
+                        <input type="email" required name="billing_email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <p>Téléphone:</p>
+                    <div class="youplay-input">
+                        <input type="text"  required name="billing_phone" placeholder="Phone">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- Cart -->
+            <h2>Produits de votre panier</h2>
+
+                {% for item in items %}
+            <!-- Single Product Block -->
+            <div class="item angled-bg">
+                <div class="row">
+                    <div class="col-xs-6 col-md-9">
+                        <h4 class="ml-20">{{item.produit.libelle }}</h4>
+                    </div>
+                    <div class="col-xs-6 col-md-3 align-right">
+                        <div class="price">
+                             <span class="quantity">{{ item.quantity }} × <span class="amount">{{ item.produit.Prix }}DT</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Single Product Block -->
+        {% endfor %}
+
+            <div class="align-right h3 mr-20 mb-20">
+                Total: <strong>{{total}}DT</strong>
+            </div>
+            <!-- Cart -->
+            <div class="youplay-radio">
+             <div class="form-row">
+                    <label for="card-element">
+                    Credit or debit card
+                    </label>
+                    <div id="card-element">
+                    <!-- A Stripe Element will be inserted here. -->
+                    </div>
+
+                    <!-- Used to display Element errors. -->
+                    <div id="card-errors" role="alert"></div>
+                </div>
+
+            </div>
+
+            <!-- Order Button -->
+            <div class="align-right">
+                <button type="submit" class="btn btn-lg">Place Order</button>
+                
+            </div>
+            <!-- /Order Button -->
+        </div>
+
+        <!-- /Right Side -->
+
+    </div>
+</form>
+
+ <script>
+     $("#card-element").ready(function(){
+            var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+            var elements = stripe.elements();
+            // Custom styling can be passed to options when creating an Element.
+            var style = {
+                base: {
+               // Add your base input styles here. For example:
+                fontSize: '16px',
+                color: '#fff',
+                'font-weight': '500',
+                'font-family':' Roboto, Open Sans, Segoe UI, sans-serif',
+                'font-size': '16px',
+                },
+            };
+
+               // Create an instance of the card Element.
+            var card = elements.create('card', {style: style});
+
+// Add an instance of the card Element into the `card-element` <div>.
+                card.mount('#card-element');
+            // Create a token or display an error when the form is submitted.
+            var form = document.getElementById('payment-form');
+                form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                stripe.createToken(card).then(function(result) {
+               if (result.error) {
+            // Inform the customer that there was an error.
+                  var errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+            // Send the token to your server.//
+               // stripeTokenHandler(result.token);
+               // window.location.href='/success-payment'
+            }
+                 });
+                });
+            function stripeTokenHandler(token) {
+            // Insert the token ID into the form so it gets submitted to the server
+                 var form = document.getElementById('payment-form');
+                 var hiddenInput = document.createElement('input');
+                    hiddenInput.setAttribute('type', 'hidden');
+                    hiddenInput.setAttribute('name', 'stripeToken');
+                    hiddenInput.setAttribute('value', token.id);
+                    form.appendChild(hiddenInput);
+
+               // Submit the form
+                form.submit();
+            }
+     });
+            
+
+     </script>
+{% endblock %}

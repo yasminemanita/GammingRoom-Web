@@ -1,0 +1,82 @@
+{% extends 'base_coach.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+    <h1> {{cour.nomcours }} </h1>
+
+    <table>
+
+
+        <tr>
+            <td>  <img  src="{{ asset('/images/cours/'~cour.imagecours) }}" align="center" width="500px" height="200px"></td> <h1>   </h1>
+
+            <td><iframe width="900" height="315" src="{{ cour.lienyoutube }}" title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe></td>
+
+        </tr>
+    </table>
+
+    <table class="table">
+        <tbody>
+
+
+        <tr>
+            <th>Lien youtube</th>
+            <td>{{ cour.lienyoutube }}</td>
+        </tr>
+
+
+        <tr>
+            <th>Déscription</th>
+            <td>{{ cour.description }}</td>
+        </tr>
+        <tr>
+            <th>Catégorie</th>
+            <td>{{ cour.categorie.nomcategorie }}</td>
+        </tr>
+        <tr>
+            <th>Nombre de Participants</th>
+            <td>{{ cour.nbParticipant }}</td>
+        </tr>
+        <tr>
+            <th>Date de Création</th>
+            <td>{{ cour.dateCreation ? cour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Mots Clés</th>
+            <td>{{ cour.tags }}</td>
+        </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
+
+
+
+
+
+
+    <br>
+
+    <a href="{{ path('cour_index_admin') }}">back to list</a>
+
+    <a href="{{ path('cour_edit_admin', {'id': cour.id}) }}">edit</a>
+    {{ include('cour/_delete_form.html.twig') }}
+
+
+
+
+
+
+{% endblock %}

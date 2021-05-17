@@ -1,0 +1,339 @@
+
+{% block stylesheets %}
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/daterangepicker/daterangepicker.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/toastr/toastr.min.css')}}">
+
+    <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
+    <script src="https://unpkg.com/esri-leaflet"></script>
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+    <style>
+        #map {
+            width: 698px;
+            height: 468px;
+            margin-bottom: 15px;
+        }
+
+    </style>
+
+{% endblock %}
+<!--Modal-->
+<div class="modal fade bd-example-modal-lg" id="MapsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Localisation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <center>
+                    <div id="map"></div>
+                </center>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Modal-->
+
+<div class="card card-info">
+    <div class="card-header">
+        <h3 class="card-title"></h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        {{ form_start(form,{'attr':{'novalidate': 'novalidate'}})}}
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Titre</label>
+                        {{ form_widget(form.nomevent,{'attr':{'class':'form-control','placeholder':'Titre'}}) }}
+                        {% if form_errors(form.nomevent) %}
+                            <div role="alert">
+                                {{ form_errors(form.nomevent) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        <label>Image</label>
+                        {{ form_widget(form.image,{'attr':{'class':'form-control'}}) }}
+                        {% if form_errors(form.image) %}
+                            <div role="alert">
+                                {{ form_errors(form.image) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Date début</label>
+                        <div  id="dateStart" data-target-input="nearest">
+                            <div class="input-group-append" data-target="#dateStart" data-toggle="datetimepicker">{{ form_widget(form.datedeb) }}
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            {% if form_errors(form.datedeb) %}
+                                <div role="alert">
+                                    {{ form_errors(form.datedeb) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Date fin</label>
+                        <div id="dateEnd" data-target-input="nearest">
+                            <div class="input-group-append" data-target="#dateEnd" data-toggle="datetimepicker">{{ form_widget(form.datefin) }}
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                            {% if form_errors(form.datefin) %}
+                                <div  role="alert">
+                                    {{ form_errors(form.datefin) }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Nombre maximale de participants</label>
+                        {{ form_widget(form.nbremaxParticipant,{'attr':{'class':'form-control','placeholder':'Nombre paire requis'}}) }}
+                        {% if form_errors(form.nbremaxParticipant) %}
+                            <div  role="alert">
+                                {{ form_errors(form.nbremaxParticipant) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Catégorie</label>
+                        {{ form_widget(form.categorie,{'attr':{'class':'form-control'}}) }}
+                        {% if form_errors(form.categorie) %}
+                            <div  role="alert">
+                                {{ form_errors(form.categorie) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Lieu</label>
+                        <table>
+                            <tr>
+                                <td style="width: 100%;">
+                                    {{ form_widget(form.lieu,{'attr':{'class':'form-control', 'id': 'lieuMap' ,'placeholder':'Online'}}) }}
+                                    {% if form_errors(form.lieu) %}
+                                        <div  role="alert">
+                                            {{ form_errors(form.lieu) }}
+                                        </div>
+                                    {% endif %}
+                                </td>
+                                <td >
+                                    <button data-toggle="modal" data-target="#MapsModal" type="button" style="position: relative;left: -22px;top: 7px;background: none;border: none;color: #17a2b8;">
+                                        <i class="fa fa-map-marker-alt"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div class="form-group">
+                        <label>Lien youtube</label>
+                        {{ form_widget(form.lienyoutube,{'attr':{'class':'form-control','placeholder':'Http://'}}) }}
+                        {% if form_errors(form.lienyoutube) %}
+                            <div  role="alert">
+                                {{ form_errors(form.lienyoutube) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Description</label>
+                        {{ form_widget(form.description,{'attr':{'class':'form-control','placeholder':'description'}}) }}
+                        {% if form_errors(form.description) %}
+                            <div  role="alert">
+                                {{ form_errors(form.description) }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        <button style="width: 100%;background-color: #17a2b8" type="submit" class="btn btn-primary"  style="width: 100px;">{{ button_label|default('Ajouter') }}</button>
+        {{ form_end(form) }}
+
+    </div>
+    <!-- /.card-body -->
+</div>
+
+
+
+<!--<a  type="button" class="btn btn-app" >"
+        <i class="fas fa-save"></i>
+        <button type="button" class="btn btn-danger toastsDefaultDanger">
+    Launch Danger Toast
+</button>
+    </a>-->
+
+{% block javascripts %}
+    <!-- jQuery -->
+    <script src="{{asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <!-- date-range-picker -->
+    <script src="{{asset('assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
+
+    <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+
+    <script src="{{asset('assets/dist/js/demo.js')}}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{{asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="{{asset('assets/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js')}}"></script>
+    <!-- InputMask -->
+    <script src="{{asset('assets/plugins/moment/moment.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/inputmask/jquery.inputmask.min.js')}}"></script>
+    <!-- bootstrap color picker -->
+    <script src="{{asset('assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="{{asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js')}}"></script>
+    <!-- Bootstrap Switch -->
+    <script src="{{asset('assets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
+    <!-- BS-Stepper -->
+    <script src="{{asset('assets/plugins/bs-stepper/js/bs-stepper.min.js')}}"></script>
+    <!-- dropzonejs -->
+    <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/toastr/toastr.min.js')}}"></script>
+
+    <script>
+        $(function () {
+            $('#dateStart').datetimepicker({
+                format: 'L',
+                allowInputToggle: true,
+                format: 'YYYY-MM-DD'
+            });
+
+            $('#dateEnd').datetimepicker({
+                format: 'L',
+                allowInputToggle: true,
+                format: 'YYYY-MM-DD'
+            });
+        });
+
+
+
+
+
+
+        $(function() {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+
+            $('.toastsDefaultDanger').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr.'
+                })
+            });
+        });
+
+
+        $('.toastsDanger').click(function() {
+                $(document).Toasts('create', {
+                    class: 'bg-danger',
+                    title: 'Toast Title',
+                    subtitle: 'Subtitle',
+                    body:''
+                })
+
+            $(document).Toasts('create', {
+                class: 'bg-danger',
+                title: 'Toast Title',
+                subtitle: 'Subtitle',
+                body:''
+            })
+        });
+    </script>
+<!--MAP-->
+    <script>
+
+        $( document ).ready(function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(initMap);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        });
+
+
+        //document.getElementById("publication_localisation").value = data.results[i].properties.PlaceName;
+
+        function initMap(position) {
+
+            var map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 12);
+            var tiles = L.esri.basemapLayer("Streets").addTo(map);
+            var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+            var results = L.layerGroup().addTo(map);
+            results.addLayer(L.marker([position.coords.latitude, position.coords.longitude]));
+            searchControl.on("results", function(data) {
+                results.clearLayers();
+                for (var i = data.results.length - 1; i >= 0; i--) {
+                    results.addLayer(L.marker(data.results[i].latlng));
+                    //document.getElementById("publication_localisation").value = data.results[i].properties.PlaceName;
+                }
+            });
+
+            map.on('click', function(e){
+                var coord = e.latlng;
+                var lat = coord.lat;
+                var lng = coord.lng;
+                console.log("You clicked the map at latitude: " + lat + " and longitude: " + lng);
+                var marker = L.marker([lat, lng]).addTo(map);
+                var popup = L.popup()
+                    .setLatLng([lat, lng])
+                    .setContent("Vous avez cliquez à "+coord)
+                    .openOn(map);
+                document.getElementById("evenement_lieu").value = lat+", "+lng;
+            });
+
+        }
+    </script>
+{% endblock %}

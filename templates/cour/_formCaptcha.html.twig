@@ -1,0 +1,155 @@
+{{ form_start(form,{'attr':{'novalidate': 'novalidate'}}) }}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.nomcours, {
+                label: 'Cour :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.description, {
+                label: 'Description :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.nbParticipant, {
+                label: 'Nb participants :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.dateCreation,
+                {label: 'Date creation :'}
+            ) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.tags, {
+                label: 'Tags :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.imagecours, {
+                label: 'Image :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12 mb-5">
+        <div class="form-group position-relative">
+            {{ form_row(form.lienyoutube, {
+                label: 'Lien youtube :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+        <a id="infoyou" href="#" class="btn-dark m-3 p-3" >Importer informations</a>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.membre, {
+                label: 'Membre :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.captcha, {
+                label: 'Captcha :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group position-relative">
+            {{ form_row(form.categorie, {
+                label: 'Categorie :',
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': '',
+                },
+            }) }}
+        </div>
+    </div>
+    <div class="col-md-12"></div>
+    <div class="col-md-12">
+        <button class="btn">{{ button_label|default('Save') }}</button>
+    </div>
+</div>
+<!--api youtube-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script id="info-youtube">
+    $(document).ready(function () {
+        $("#infoyou").click(function () {
+
+            url = $('#cour_new_lienyoutube').val();
+            idpos = url.lastIndexOf("/") + 1;
+            id = url.substring(idpos, idpos + 11);
+            console.log(url);
+            $.ajax({
+                type: 'GET',
+                url: 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=' + id,
+                data: {
+                    key: 'AIzaSyA_8Z1_SB9rtueiZXM3kMLKHlV5kOqTGSY',
+
+
+                },
+                success: function (retour) {
+
+                    console.log(retour);
+                    //$('iframe').attr('src', 'https://www.youtube.com/embed/' + data.items[0].id.videoId)
+                    $("#cour_new_nomcours").val(retour.items[0].snippet.title);
+                    $("#cour_new_description").val(retour.items[0].snippet.description);
+                    $("#cour_new_tags").val(retour.items[0].snippet.tagsjson);
+                    console.log(retour.items[0].snippet.title);
+
+                    // $('.description').text(data.items[0].snippet.description)
+
+
+                },
+
+            });
+            return false;
+        });
+    });
+
+</script>
+
+{{ form_end(form) }}

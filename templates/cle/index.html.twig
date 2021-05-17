@@ -1,0 +1,75 @@
+{% extends 'base_admin.html.twig' %}
+{% block body %}
+
+    <center><input type="text" id="search" placeholder="CHERCHER CLE..."></center>
+
+
+    <a href="{{ path('cle_new') }}"><button class="btn btn-secondary buttons-copy buttons-html5" tabindex="0" aria-controls="example1" type="button"><span>create</span></button></a>
+
+    <center>
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive" id="source0">
+                    <table class="table table-bordered"  width="100%" cellspacing="0" id="tableac">
+
+                        <tr>
+                            <th>Idcle</th>
+                            <th>Code</th>
+                            <th>Produit</th>
+                            <th>actions</th>
+                        </tr>
+                        <tbody>
+                        {% for cle in cles %}
+                            <tr>
+                                <td>{{ cle.idcle }}</td>
+                                <td>{{ cle.code }}</td>
+                                <td>{{ cle.getProduit().getLibelle() }}</td>
+                                <td>
+                                    <a href="{{ path('cle_show', {'idcle': cle.idcle}) }}"><button type="button" class="btn btn-outline-info">afficher</button></a>
+
+                                </td>
+
+
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </center>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    $(document).ready(function(){
+    $('#search').keyup(function(){
+        search_table($(this).val());
+    });
+    function search_table(value){
+    $('#tableac tbody tr').each(function(){
+    var found = 'false';
+    $(this).each(function(){
+    //console.log($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0,$(this).text().toLowerCase());
+    if($(this).text().toLowerCase().indexOf(value.toLowerCase()) >= 0)
+{
+    found = 'true';
+}
+});
+    if(found == 'true')
+{
+    $(this).show();
+
+}
+    else
+{
+    $(this).hide();
+
+}
+});
+}
+});
+</script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}New Produit{% endblock %}
+
+{% block body %}
+
+<div class="col-md-6">
+    <h1 class="tit-regis" >Ajouter Produit</h1>
+
+    {{ include('produit/_form.html.twig') }}
+
+    <a href="{{ path('produit_index') }}"><button type="button" class="btn btn-outline-info"> liste des produits</button></a>
+</div>
+{% endblock %}

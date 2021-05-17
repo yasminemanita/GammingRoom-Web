@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>GamingRoom</title>
+
+        <meta name="description" content="GamingRoom - est une platforme où les joueurs peuvent se rencontrer et s'amuser">
+        <meta name="keywords" content="gaming, game, community, games,events,cours">
+        <meta name="author" content="ProdgiesDev">
+
+        <link rel="icon" type="image/png" href="assets/images/dark/icon.png">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- START: Styles -->
+
+        <!-- Google Fonts -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700">
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css')}}" />
+
+        <!-- Flickity -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/flickity/dist/flickity.min.css')}}" />
+
+        <!-- Magnific Popup -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/magnific-popup/dist/magnific-popup.css')}}" />
+
+        <!-- Revolution Slider -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/settings.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/layers.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/vendor/slider-revolution/css/navigation.css')}}">
+
+        <!-- Bootstrap Sweetalert -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.css')}}" />
+
+        <!-- Social Likes -->
+        <link rel="stylesheet" href="{{asset('assets/vendor/social-likes/dist/social-likes_flat.css')}}" />
+
+        <!-- FontAwesome -->
+        <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fontawesome-all.min.js')}}"></script>
+        <script defer src="{{asset('assets/vendor/font-awesome/svg-with-js/js/fa-v4-shims.min.js')}}"></script>
+
+        <!-- Youplay -->
+        <link rel="stylesheet" href="{{asset('assets/css/youplay.css')}}">
+
+        <!-- RTL (uncomment this to enable RTL support) -->
+        <!-- <link rel="stylesheet" href="{{asset('assets/css/youplay-rtl.min.css')}}" /> -->
+
+        <!-- Custom Styles -->
+        <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+        
+        <!-- END: Styles -->
+
+        <!-- jQuery -->
+        <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+        
+        <!-- START: Scripts -->
+        <script src="https://js.stripe.com/v3/"></script>
+
+        {% block stylesheets %}
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        {% endblock %}
+        
+        <script src="{{ asset('bundles/goswebsocket/js/vendor/autobahn.min.js') }}"></script>
+        <script src="{{ asset('bundles/goswebsocket/js/websocket.min.js') }}"></script>
+        
+        <link rel="stylesheet" href="{{asset('assets/css/chat.css')}}">
+        <script src="{{asset('assets/js/chat.js')}}"></script>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+        {% include 'base_header.html.twig' %}
+        {% block bannertop %}
+
+        {% endblock %}
+
+        <div id="body"> 
+        
+        <div id="chat-circle" class="btn btn-raised">
+                <div id="chat-overlay"></div>
+                    <i class="fas fa-comments"></i>
+            </div>
+        
+        <div class="chat-box">
+            <div class="chat-box-header">
+            GamingRoom Chat Box
+            <span class="chat-box-toggle"><i class="fas fa-times"></i></span>
+            </div>
+            <div class="chat-box-body">
+            <div class="chat-box-overlay">   
+            </div>
+            <div class="chat-logs">
+            
+            </div><!--chat-log -->
+            </div>
+            <div class="chat-input">      
+            <form>
+            {% if app.user %}
+                <input type="text" id="chat-input" placeholder="Send a message..."/>
+                <button type="submit" class="chat-submit" id="chat-submit"><i class="fas fa-paper-plane"></i></button>
+                
+            {% else %}
+                 <a href="/login" class="loginbtn">login</a> 
+            {% endif %}
+            </form>      
+            </div>
+        </div>
+
+        </div>
+        {% block body %}{% endblock %}
+        {% block contentfin %} {% endblock %}
+        {% include 'base_footer.html.twig' %}
+        
+        {% if app.user %}
+            <input type="hidden" id="userName" value="{{app.user.prenom}}" />
+            <input type="hidden" id="idUser" value="{{app.user.id}}" />
+        {% endif %}
+
+
+
+
+    </body>
+
+    <!-- Object Fit Polyfill -->
+    <script src="{{ asset('assets/vendor/object-fit-images/dist/ofi.min.js') }}"></script>
+
+    <!-- jQuery -->
+    <script src="{{asset('assets/vendor/jquery/dist/jquery.min.js')}}"></script>
+
+    <!-- Hexagon Progress -->
+    <script src="{{asset('assets/vendor/HexagonProgress/jquery.hexagonprogress.min.js')}}"></script>
+
+    <!-- Bootstrap -->
+    <script src="{{asset('assets/vendor/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+
+    <!-- Jarallax -->
+    <script src="{{asset('assets/vendor/jarallax/dist/jarallax.min.js')}}"></script>
+
+    <!-- Flickity -->
+    <script src="{{asset('assets/vendor/flickity/dist/flickity.pkgd.min.js')}}"></script>
+
+    <!-- jQuery Countdown -->
+    <script src="{{asset('assets/vendor/jquery-countdown/dist/jquery.countdown.min.js')}}"></script>
+
+    <!-- Moment.js -->
+    <script src="{{asset('assets/vendor/moment/min/moment.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/moment-timezone/builds/moment-timezone-with-data.min.js')}}"></script>
+
+    <!-- Magnific Popup -->
+    <script src="{{asset('assets/vendor/magnific-popup/dist/jquery.magnific-popup.min.js')}}"></script>
+
+    <!-- Revolution Slider -->
+    <script src="{{asset('assets/vendor/slider-revolution/js/jquery.themepunch.tools.min.js')}}"></script>
+    <script src="{{asset('assets/vendor/slider-revolution/js/jquery.themepunch.revolution.min.js')}}"></script>
+
+    <!-- ImagesLoaded -->
+    <script src="{{asset('assets/vendor/imagesloaded/imagesloaded.pkgd.min.js')}}"></script>
+
+    <!-- Isotope -->
+    <script src="{{asset('assets/vendor/isotope-layout/dist/isotope.pkgd.min.js')}}"></script>
+
+    <!-- Bootstrap Validator -->
+    <script src="{{asset('assets/vendor/bootstrap-validator/dist/validator.min.js')}}"></script>
+
+    <!-- Bootstrap Sweetalert -->
+    <script src="{{asset('assets/vendor/bootstrap-sweetalert/dist/sweetalert.min.js')}}"></script>
+
+    <!-- Social Likes -->
+    <script src="{{asset('assets/vendor/social-likes/dist/social-likes.min.js')}}"></script>
+
+    <!-- Youplay -->
+    <script src="{{asset('assets/js/youplay.js')}}"></script>
+    <script src="{{asset('assets/js/youplay-init.js')}}"></script>
+
+
+
+    <!-- END: Scripts -->
+
+</html>
+

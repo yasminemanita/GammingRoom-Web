@@ -1,0 +1,30 @@
+{% extends 'base_front.html.twig' %}
+{% block pro %}
+    {% for p in prod %}
+
+            <div class="side-block">
+                <h4 class="block-title"></h4>
+                <div class="block-content p-0">
+                    <!-- Single News Block -->
+                    <div class="row youplay-side-news">
+                        <div class="col-xs-3 col-md-4">
+                            <a href="store-product-1.html" class="angled-img">
+                                <div class="img">
+                                    <img  src="{{ asset('images/produits/'~p.image~'') }}">
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-xs-9 col-md-8">
+                            <h4 class="ellipsis"><a href="store-product-1.html" title="Bloodborne">{{ p.libelle }}</a></h4>
+                            <span class="price">{{ p.prix}}</span>
+                            <a href="{{path('updateProdPanier', {id: p.idProd,nb:1})}}"><button  class="btn btn-lg">Ajouter au panier</button></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+    {% endfor %}
+
+{% endblock %}
+

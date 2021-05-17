@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CategoriMembre{% endblock %}
+
+{% block body %}
+    <h1>Create new CategoriMembre</h1>
+
+    {{ include('categori_membre/_form.html.twig') }}
+
+    <a href="{{ path('categori_membre_index') }}">back to list</a>
+{% endblock %}

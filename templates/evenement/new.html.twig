@@ -1,0 +1,11 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}New Evenement{% endblock %}
+
+{% block body %}
+    <h1>Entrer les données du nouvel evenement</h1>
+
+    {{ include('evenement/_form.html.twig') }}
+
+    <a style="width: 100%;background-color: #17a2b8"  type="button" class="btn btn-primary" href="{{ path('evenement_index') }}">Retour à la liste</a>
+{% endblock %}

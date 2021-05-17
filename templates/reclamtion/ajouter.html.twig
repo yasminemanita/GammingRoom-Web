@@ -1,0 +1,68 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block body %}
+
+<section class="youplay-banner banner-top youplay-banner-parallax small">
+    
+        <div class="image" data-speed="0.4">
+            <img src="/images/banner-bg.jpg" alt="" class="jarallax-img">
+        </div>
+    
+
+    <div class="info">
+        <div>
+            <div class="container">
+                
+                
+                    <h1 class="h1">Vous Pouvez ajouter une réclamation</h1>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    
+    <div class="info">
+        <div>
+            <div class="container">
+                
+                
+                
+                    
+    <div class="youplay-login">
+        <div class="youplay-form text-center">
+            <h1>Réclamation</h1>
+
+        {{form_start(form,{'attr':{'novalidate':'novalidate'}})}}
+                <div class="youplay-input">    
+                {{ form_widget(form.sujet,{'attr':{'placeholder':'Sujet'}}) }}
+                                   
+                </div>
+                 {% if form_errors(form.sujet) %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ form_errors(form.sujet) }}
+                                        </div>
+                                    {% endif %}
+                <div class="youplay-input">
+                {{ form_widget(form.contenue,{'attr':{'placeholder':'Message'}}) }}
+                                   
+                </div>
+                 {% if form_errors(form.contenue) %}
+                                        <div class="alert alert-danger" role="alert">
+                                            {{ form_errors(form.contenue) }}
+                                        </div>
+                                    {% endif %}
+                <button class="btn btn-default db">Envoyer</button>
+        {{form_end(form)}}
+        </div>
+    </div>
+
+                
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

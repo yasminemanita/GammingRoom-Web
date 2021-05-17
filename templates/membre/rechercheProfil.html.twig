@@ -1,0 +1,150 @@
+{% extends 'base_clientSide.html.twig' %}
+
+{% block bannertop %}
+    <section class="youplay-banner banner-top youplay-banner-parallax small">
+
+        <div class="image" data-speed="0.4">
+            <img src="{{asset('assets/images/dark/login2.png')}}" alt="" class="jarallax-img">
+        </div>
+
+
+        <div class="youplay-user-navigation">
+            <div class="container">
+                <ul>
+                    <li><a href="user-activity.html">Activity</a></li>
+                    <li class="active"><a href="user-profile.html">Profile</a></li>
+                    <li><a href="#">Groups</a></li>
+                    <li><a href="#">Forums</a></li>
+                </ul>
+            </div>
+        </div>
+        {% for user in user %}
+
+        <div class="info">
+            <div>
+                <div class="container youplay-user">
+                    <a href="{{ asset('images/membre/'~user.image~'') }}" class="angled-img image-popup">
+                        <div class="img">
+                            <img src="{{ asset('images/membre/'~user.image~'') }}" width="200px" height="150px" alt="">
+                        </div>
+                        <i class="fa fa-search-plus icon"></i>
+                    </a>
+                    <div class="user-data">
+                        <h2>{{ user.prenom }} {{ user.nom }}</h2>
+                        <div class="location"><i class="fas fa-user"></i> {{ user.role }} - {{ user.genre }}</div>
+
+                        <div class="location"><i class="fas fa-phone"></i> {{ user.numeroTel }}</div>
+
+                        <div class="location"><i class="fas fa-envelope-square"></i> {{ user.email }}</div>
+                        <!--<div class="activity">
+                            <div>
+                                <div class="num">69</div>
+                                <div class="title">Posts</div>
+                            </div>
+                            <div>
+                                <div class="num">12</div>
+                                <div class="title">Games</div>
+                            </div>
+                            <div>
+                                <div class="num">689</div>
+                                <div class="title">Followers</div>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+
+                <div class="container mt-20">
+                    <a href="#" class="btn btn-sm btn-default ml-0">Add Friend</a>
+                    <a href="#" class="btn btn-sm btn-default">Private Message</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </section>
+{% endblock %}
+{% block content %}
+<div class="content-wrap">
+    {% endblock %}
+    {% block contentfin %}
+</div>
+{% endblock %}
+{% block body %}
+    {% for user in user %}
+
+    <div class="container youplay-content">
+
+        <div class="row">
+
+            <div class="col-md-9">
+
+                <h3 class="mt-0 mb-20">{{ user.prenom }}</h3>
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td style="width: 200px;"><p>Nom</p></td>
+                        <td><p>{{ user.nom }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Prenom</p></td>
+                        <td><p>{{ user.prenom }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Sexe</p></td>
+                        <td><p>{{ user.genre }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Date de naissance</p></td>
+                        <td><p>{{ user.dateNaissance ? user.dateNaissance|date('Y-m-d') : '' }}</p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Role</p></td>
+                        <td><p>{{ user.role  }}
+                    </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-40 mb-20">Contact </h3>
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <td style="width: 200px;"><p>Email</p></td>
+                        <td><p><a href="#">{{ user.email }}</a></p></td>
+                    </tr>
+                    <tr>
+                        <td><p>Numero telephone</p></td>
+                        <td><p>{{ user.numeroTel }}</p></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                
+
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-md-3">
+                <div class="side-block">
+                    <h4 class="block-title">About</h4>
+                    <div class="block-content">
+                        Ecce dabo Pinkman Isai OK? Sicut locutus est tibi, et datus est, et hic sine Semper consequat volumus ... et ille in urbe ista licet? Et infernus, ubi tu non Virginiae ornare vel ipsum. Ut enim Albuquerque et ille eum iure hic, et ego ducam te ad iustitiam.
+                    </div>
+                </div>
+                <div class="side-block">
+                    <h4 class="block-title">Location</h4>
+                    <div class="block-content pt-5">
+                        <div class="responsive-embed responsive-embed-16x9">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423284.59051352815!2d-118.41173249999999!3d34.0204989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2z0JvQvtGBLdCQ0L3QtNC20LXQu9C10YEsINCa0LDQu9C40YTQvtGA0L3QuNGPLCDQodCo0JA!5e0!3m2!1sru!2sru!4v1430158354122" width="600" height="450"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Right Side -->
+
+        </div>
+
+    </div>
+    {% endfor %}
+
+{% endblock %}

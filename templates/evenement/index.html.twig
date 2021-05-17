@@ -1,0 +1,136 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+ {% endblock %}
+
+{% block body %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header" >
+                        <h3 class="card-title">Evenement</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Idevent</th>
+                                    <th>Nomevent</th>
+                                    <th>Datedeb</th>
+                                    <th>Datefin</th>
+                                    <th>Image</th>
+                                    <th>NbremaxParticipant</th>
+                                    <th>Description</th>
+                                    <th>Categorie</th>
+                                    <th>Lieu</th>
+                                    <th>Lienyoutube</th>
+                                    <th>actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for evenement in evenements %}
+                                <tr>
+                                    <td>{{ evenement.idevent }}</td>
+                                    <td>{{ evenement.nomevent }}</td>
+                                    <td>{{ evenement.datedeb ? evenement.datedeb|date('Y-m-d') : '' }}</td>
+                                    <td>{{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}</td>
+                                    <td><img src="{{ asset('/images/evenement/' ~ evenement.image) }}" width="40px" height="40px"></td>
+                                    <td>{{ evenement.nbremaxParticipant }}</td>
+                                    <td>{{ evenement.description }}</td>
+                                    <td>{{ evenement.categorie.nomcategorie }}</td>
+                                    <td>{{ evenement.lieu }}</td>
+                                    <td>{{ evenement.lienyoutube }}</td>
+                                    <td>
+                                        <a class="btn btn-app" href="{{ path('evenement_show', {'idevent': evenement.idevent}) }}">
+                                            <i class="fas fa-eye"></i> Show
+                                        </a>
+                                        <a class="btn btn-app" href="{{ path('evenement_edit', {'idevent': evenement.idevent}) }}">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="10">no records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Idevent</th>
+                                    <th>Nomevent</th>
+                                    <th>Datedeb</th>
+                                    <th>Datefin</th>
+                                    <th>Image</th>
+                                    <th>NbremaxParticipant</th>
+                                    <th>Description</th>
+                                    <th>Categorie</th>
+                                    <th>Lieu</th>
+                                    <th>Lienyoutube</th>
+                                    <th>actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div></div><div class="row"><div class="col-sm-12 col-md-5"><div class="dataTables_info" id="example1_info" role="status" aria-live="polite"></div></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="example1_paginate"><ul class="pagination">{{ knp_pagination_render(evenements) }}</ul></div></div></div></div>
+                    <button type="button" class="btn btn-outline-primary btn-block">
+                        <i class="fa fa-plus"></i> <a href="{{ path('evenement_new') }}">Ajouter une evenement</a>
+                    </button>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/jszip/jszip.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/pdfmake/pdfmake.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/pdfmake/vfs_fonts.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
+
+    <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
+
+    <script src="{{asset('assets/dist/js/demo.js')}}"></script>
+
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
+    <script>
+
+
+    </script>
+{% endblock %}

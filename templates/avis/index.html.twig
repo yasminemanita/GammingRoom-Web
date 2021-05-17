@@ -1,0 +1,71 @@
+{% extends 'base_admin.html.twig' %}
+
+{% block stylesheets %}
+  <style>
+    .btn{
+      width:200px;
+    }
+
+  </style>
+{% endblock %}
+{% block body %}
+  <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Jeux</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+ <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+               
+               </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                  <tr>
+                    <th>Message</th>
+                    <th>Membre</th>
+                    <th>Sentiment</th>
+                    <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {% for avi in avis %}
+                  <tr>
+                    <td>{{avi.avis}}</td>
+                    <td>{{avi.getMembre().nom}} {{avi.getMembre().prenom}}</td>
+                    <td>{{avi.sentiment}}</td>
+                    <td>       
+                    <a href="{{path('adminSupprimerAvis', {id: avi.id})}}" > <button type="button" class="btn btn-danger   btn-lg" onclick="return confirm('Êtes-vous sûr?')">Supprimer</button></a>
+                     </td>
+                  </tr>
+                  {% endfor %}
+                  {% if avis|length ==0 %}
+                    <tr>
+                        <td colspan="10" style="text-align:center">il n'y a pas d'avis</td>
+                    </tr>
+                  {% endif %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+{% endblock %}

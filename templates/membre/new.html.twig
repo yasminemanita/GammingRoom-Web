@@ -1,0 +1,82 @@
+{% extends 'base_clientSide.html.twig' %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{asset('assets/datepicker/datepicker.css')}}">
+{% endblock %}
+
+ {% block bannertop %}
+
+     <section class="youplay-banner banner-top youplay-banner-parallax">
+
+         <div class="image" data-speed="0.4">
+             <img src="{{asset('assets/images/dark/login3.jpg')}}" alt="" class="jarallax-img">
+         </div>
+
+
+         <div class="info">
+             <div>
+                 <div class="container">
+
+                     <div class="row"><div class="col-md-8">
+
+
+                             <h1 class="h1">GamingRoom- Welcome</h1>
+
+                                <h3>Find gamers just like you</h3>
+
+                             <p class="lead">
+                                The BETA will go live on November, so sign up to enjoy GamingRoom before anyone else
+                             </p>
+                             <br>
+                             <h4> You already have an account </h4>
+                             <a class="btn btn-md active" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt"></i></i>&nbsp;Login</a>
+
+
+
+                         </div></div>
+
+                 </div>
+             </div>
+         </div>
+
+     </section>
+
+ {% endblock %}
+
+{% block body %}   
+
+<!-- <section class="youplay-banner banner-top youplay-banner-parallax xsmall">
+
+        <div class="image" data-speed="0.4">
+            <img src="/images/banner-bg.jpg" alt="" class="jarallax-img">
+        </div>
+
+
+    <div class="info">
+        <div>
+            <div class="container">
+
+
+                    <h1 class="h1">Checkout</h1>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>-->
+    <div class="container youplay-content">
+
+
+             {{ include('membre/_form.html.twig') }}
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{asset('assets/datepicker/datepicker.js')}}"></script>
+    <script>
+        jQuery(document).ready(function (){
+            $('.js-datepicker').datepicker();
+        });
+    </script>
+
+{% endblock %}

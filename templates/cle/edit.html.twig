@@ -1,0 +1,14 @@
+{% extends 'base_admin.html.twig' %}
+
+
+{% block body %}
+    <h1>Modifier Clé</h1>
+<div class="col-md-6">
+
+
+{{ include('cle/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+    {{ include('cle/_delete_form.html.twig') }}
+</div>
+{% endblock %}

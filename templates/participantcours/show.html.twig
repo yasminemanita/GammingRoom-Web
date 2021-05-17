@@ -1,0 +1,35 @@
+{% extends 'base_coach.html.twig' %}
+
+{% block title %}Participantcours{% endblock %}
+
+{% block body %}
+    <h1>{{participantcour.membre.nom}} {{participantcour.membre.prenom }}</h1>
+
+    <table class="table">
+        <tbody>
+
+
+
+
+
+
+        <tr>
+            <th>Genre</th>
+            <td>{{ participantcour.membre.genre}}</td>
+        </tr>
+        <tr>
+            <th>Cours</th>
+            <td>{{ participantcour.cour.nomcours }}</td>
+        </tr>
+
+
+
+
+        </tbody>
+    </table>
+    <a href="{{ path('participantcours_index') }}">back to list</a>
+
+   <!-- <a href="{{ path('participantcours_edit', {'id': participantcour.id}) }}">edit</a>-->
+
+    {{ include('participantcours/_delete_form.html.twig') }}
+{% endblock %}

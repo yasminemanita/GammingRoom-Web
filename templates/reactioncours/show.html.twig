@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reactioncours{% endblock %}
+
+{% block body %}
+    <h1>Reactioncours</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ reactioncour.id }}</td>
+            </tr>
+            <tr>
+                <th>Interaction</th>
+                <td>{{ reactioncour.interaction }}</td>
+            </tr>
+            <tr>
+                <th>Commentaire</th>
+                <td>{{ reactioncour.commentaire }}</td>
+            </tr>
+            <tr>
+                <th>DateCreation</th>
+                <td>{{ reactioncour.dateCreation ? reactioncour.dateCreation|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('reactioncours_index') }}">back to list</a>
+
+    <a href="{{ path('reactioncours_edit', {'id': reactioncour.id}) }}">edit</a>
+
+    {{ include('reactioncours/_delete_form.html.twig') }}
+{% endblock %}
